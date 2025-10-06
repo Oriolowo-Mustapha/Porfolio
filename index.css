@@ -45,6 +45,22 @@ body{
   font-size: 1rem;
   color: var(--navbar-link);
   transition: color 0.3s ease;
+  position: relative;
+}
+
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--navbar-link-hover);
+  transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after {
+  width: 100%;
 }
 .navbar {
   background: linear-gradient(
@@ -465,5 +481,30 @@ body{
 .quick-contact i {
   color: #f59e0b;
   margin-right: 0.5rem;
+}
+
+.hidden {
+  opacity: 0;
+  transition: all 1s;
+}
+
+.show {
+  opacity: 1;
+}
+
+.slide-in {
+  transform: translateX(-100%);
+  transition: all 1.5s;
+}
+
+.navbar.scrolled {
+  background: linear-gradient(
+    135deg,
+    #003F8F 0%,
+    #005FD8 50%,
+    #3FA9F5 85%,
+    #F59E0B 100%
+  );
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
