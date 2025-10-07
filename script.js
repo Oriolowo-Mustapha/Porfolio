@@ -14,13 +14,34 @@ sections.forEach(section => {
   observer.observe(section);
 });
 
-const cards = document.querySelectorAll('.skill-card, .project-card');
+const aboutSection = document.querySelector('#about');
+aboutSection.classList.add('slide-in-left');
 
-const cardObserver = new IntersectionObserver(entries => {
+const skillsSection = document.querySelector('#skills');
+skillsSection.classList.add('slide-in-right');
+
+const slideInObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('show');
-      entry.target.classList.remove('slide-in');
+      entry.target.classList.remove('slide-in-left');
+      entry.target.classList.remove('slide-in-right');
+    }
+  });
+});
+
+slideInObserver.observe(aboutSection);
+slideInObserver.observe(skillsSection);
+
+const cards = document.querySelectorAll('.skill-card, .project-card');
+
+const cardObserver = new IntersectionObserver(entries => {
+  entries.forEach((entry, index) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('show');
+        entry.target.classList.remove('slide-in');
+      }, index * 100);
     }
   });
 });
@@ -45,4 +66,11 @@ const typed = new Typed('#typed-text', {
   typeSpeed: 50,
   backSpeed: 50,
   loop: true
+});
+
+const hero = document.querySelector('.hero');
+
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  hero.style.backgroundPositionY = `${scrollY * 0.5}px`;
 });

@@ -497,6 +497,16 @@ body{
   transition: all 1.5s;
 }
 
+.slide-in-left {
+  transform: translateX(-100%);
+  transition: all 1s;
+}
+
+.slide-in-right {
+  transform: translateX(100%);
+  transition: all 1s;
+}
+
 .navbar.scrolled {
   background: linear-gradient(
     135deg,
