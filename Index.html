@@ -52,21 +52,22 @@
     </div>
   </section>
 
-  <section id="about" class="about-section">
-    <div class="section-header">
-        <h2 class="section-title">About Me</h2>
-        <p class="section-subtitle">Passionate Developer & Computer Science Student</p>
-    </div>
+  <section id="about" class="about-section" data-animation="slide-in-left">
+    <div class="container">
+      <div class="section-header">
+          <h2 class="section-title">About Me</h2>
+          <p class="section-subtitle">Passionate Developer & Computer Science Student</p>
+      </div>
 
-    <div class="about-content">
-        <div class="about-text">
-            <p class="intro-text">
-                Hello! I'm <span class="highlight">Mustapha</span>, a passionate full-stack developer with <span class="highlight">four years of hands-on experience</span> in building modern, responsive web applications. I'm currently in my second year of Computer Science at the Federal University of Agriculture, Abeokuta (FUNAAB), where I'm deepening my understanding of core principles and algorithms.
+      <div class="about-content">
+          <div class="about-text">
+              <p class="intro-text">
+                Hello! I'm <span class="highlight">Mustapha</span>, a passionate full-stack developer with <span class="highlight">three years of hands-on experience</span> in building modern, responsive web applications. I'm currently in my second year of Computer Science at the Federal University of Agriculture, Abeokuta (FUNAAB), where I'm deepening my understanding of core principles and algorithms.
             </p>
 
             <div class="stats-grid">
                 <div class="stat-item">
-                    <span class="stat-number">4+</span>
+                    <span class="stat-number">3+</span>
                     <span class="stat-label">Years Experience</span>
                 </div>
                 <div class="stat-item">
@@ -74,67 +75,68 @@
                     <span class="stat-label">Projects Completed</span>
                 </div>
             </div>
-        </div>
+          </div>
 
-        <div class="education-card">
-          <h3 class="education-title">Computer Science Student</h3>
-          <p class="education-institution">Federal University of Agriculture, Abeokuta (FUNAAB)</p>
-          <p class="education-year">2nd Year • 2024 - Present</p>
-        </div>  
+          <div class="education-card">
+            <h3 class="education-title">Computer Science Student</h3>
+            <p class="education-institution">Federal University of Agriculture, Abeokuta (FUNAAB)</p>
+            <p class="education-year">2nd Year • 2024 - Present</p>
+          </div>  
+        </div>
     </div>
   </section>
 
-  <section id="skills" class="skills-section">
+  <section id="skills" class="skills-section" data-animation="slide-in-right">
     <div class="container">
       <h2>My Skills</h2>
 
       <h3 class="skills-subheading">Frontend</h3>
-      <div class="skills-grid">
-        <div class="skill-card">
+      <div class="skills-grid" data-stagger-group>
+        <div class="skill-card" data-animation="slide-in" data-stagger-delay="100">
           <i class="fab fa-html5"></i>
           <p>HTML5</p>
         </div>
-        <div class="skill-card">
+        <div class="skill-card" data-animation="slide-in" data-stagger-delay="100">
           <i class="fab fa-css3-alt"></i>
           <p>CSS3</p>
         </div>
-        <div class="skill-card">
+        <div class="skill-card" data-animation="slide-in" data-stagger-delay="100">
           <i class="fab fa-bootstrap"></i>
           <p>Bootstrap</p>
         </div>
-        <div class="skill-card">
+        <div class="skill-card" data-animation="slide-in" data-stagger-delay="100">
           <i class="fab fa-js"></i>
           <p>Javascript</p>
         </div>
       </div>
 
       <h3 class="skills-subheading mt-5">Backend</h3>
-      <div class="skills-grid">
-        <div class="skill-card">
+      <div class="skills-grid" data-stagger-group>
+        <div class="skill-card" data-animation="slide-in" data-stagger-delay="100">
           <i class="fab fa-python"></i>
           <p>Python</p>
         </div>
-        <div class="skill-card">
+        <div class="skill-card" data-animation="slide-in" data-stagger-delay="100">
           <i class="devicon-csharp-plain"></i>
           <p>C#</p>
         </div>
-        <div class="skill-card">
+        <div class="skill-card" data-animation="slide-in" data-stagger-delay="100">
           <i class="devicon-mysql-plain-wordmark"></i>
           <p>MySQL</p>
         </div>
-        <div class="skill-card">
+        <div class="skill-card" data-animation="slide-in" data-stagger-delay="100">
           <i class="fab fa-microsoft"></i>
           <p>ASP.NET MVC</p>
         </div>
-        <div class="skill-card">
+        <div class="skill-card" data-animation="slide-in" data-stagger-delay="100">
           <i class="fas fa-network-wired"></i>
           <p>Web API</p>
         </div>
-        <div class="skill-card">
+        <div class="skill-card" data-animation="slide-in" data-stagger-delay="100">
           <i class="devicon-dotnetcore-plain"></i>
           <p>Entity Framework Core</p>
         </div>
-        <div class="skill-card">
+        <div class="skill-card" data-animation="slide-in" data-stagger-delay="100">
           <i class="devicon-postgresql-plain"></i>
           <p>PosgreSQL</p>
         </div>
@@ -142,12 +144,12 @@
     </div>
   </section>
 
-  <section id="projects" class="projects-section">
+  <section id="projects" class="projects-section" data-animation="fade-in">
     <div class="container">
       <h2>My Projects</h2>
-      <div class="projects-grid">
+      <div class="projects-grid" data-stagger-group>
         <!-- Project Card 1 -->
-        <div class="project-card">
+        <div class="project-card" data-animation="slide-in" data-stagger-delay="100">
           <h3>Skill-Matrix</h3>
           <p class="project-description">
             The Skill Matrix platform is a comprehensive web application designed to facilitate professional development and skill management. It serves as a tool for individuals and organizations to track, develop, and showcase a wide range of abilities with precision. The platform's goal is to make skill development both simple and effective by offering a structured approach to learning and assessment.
@@ -164,7 +166,7 @@
           <a href="https://skill-qtxf.onrender.com" class="btn-orange mt-2">View Project</a>
         </div>
         <!-- Project Card 2 -->
-        <div class="project-card">
+        <div class="project-card" data-animation="slide-in" data-stagger-delay="100">
           <h3>Hospital Management System (HMS) API</h3>
           <p class="project-description">
             This project is a back-end Hospital Management System (HMS) API, built with ASP.NET Core and C#. It is designed to serve as the core data and business logic layer for a hospital's administrative and operational needs. The API is robust, secure, and built with modern software development principles, making it a reliable foundation for a front-end application (web or mobile).
@@ -177,7 +179,7 @@
           <a href="https://github.com/Oriolowo-Mustapha/HospitalManagementSystem" class="btn-orange mt-2">View Project</a>
         </div>
         <!-- Project Card 3 -->
-        <div class="project-card">
+        <div class="project-card" data-animation="slide-in" data-stagger-delay="100">
           <h3>Space-Invaders</h3>
           <p class="project-description">
             This project is a recreation of the classic arcade game, Space Invaders, developed using Python and the Pygame library. The game features all the core mechanics of the original, providing an engaging and nostalgic experience. It serves as a strong demonstration of foundational game development concepts, including sprite management, event handling, collision detection, and score tracking.
@@ -189,7 +191,7 @@
           <a href="https://github.com/Oriolowo-Mustapha/SPACE-INVADERS" class="btn-orange mt-2">View Project</a>
         </div>
         <!-- Project Card 4 -->
-        <div class="project-card">
+        <div class="project-card" data-animation="slide-in" data-stagger-delay="100">
           <h3>Decentralized Lost & Found Matching Agent (FEVM + Gemini AI)</h3>
           <p class="project-description">
               The Decentralized Lost & Found Matching Agent is an intelligent, off-chain service that leverages Google Gemini AI and the Filecoin EVM (FEVM) blockchain to automatically match lost and found items with high accuracy and transparency.
@@ -205,7 +207,7 @@
       </div>
     </div>
   </section>
-  <section id="contact" class="contact-section">
+  <section id="contact" class="contact-section" data-animation="fade-in">
   <div class="container">
     <h2>Contact Me</h2>
     <p class="contact-intro">Have a project in mind or just want to say hi? Let's connect.</p>

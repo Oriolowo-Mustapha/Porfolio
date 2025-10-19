@@ -38,6 +38,7 @@
 
 body{
     font-family: 'Poppins', sans-serif;
+    overflow-x: hidden; /* Prevents horizontal scrollbars from off-screen animated content */
 }
 
 .navbar-nav .nav-link {
@@ -146,10 +147,11 @@ body{
   color: black;
   padding: 5rem 2rem;
   text-align: center;
+  position: relative; /* This is the key for transform animations */
 }
 
 .about-section .container {
-  max-width: 800px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -300,6 +302,7 @@ body{
   padding: 5rem 2rem;
   text-align: center;
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  position: relative; /* This is the key for transform animations */
   border-radius:1rem;
 }
 
@@ -483,28 +486,42 @@ body{
   margin-right: 0.5rem;
 }
 
+/* --- Animation Base Styles --- */
 .hidden {
   opacity: 0;
-  transition: all 1s;
 }
 
+/* --- Animation Final State --- */
 .show {
   opacity: 1;
+  transform: translateX(0) translateY(0); /* Resets any transform */
 }
 
+/* --- Animation Types --- */
+
+/* For staggered cards (slide up) */
 .slide-in {
-  transform: translateX(-100%);
-  transition: all 1.5s;
+  transform: translateY(40px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  /* The JS will set this custom property for the stagger effect */
+  transition-delay: var(--stagger-delay, 0ms);
 }
 
+/* For the 'About' section */
 .slide-in-left {
-  transform: translateX(-100%);
-  transition: all 1s;
+  transform: translateX(0);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
+/* For the 'Skills' section */
 .slide-in-right {
-  transform: translateX(100%);
-  transition: all 1s;
+  transform: translateX(0);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* For 'Projects' and 'Contact' sections */
+.fade-in {
+  transition: opacity 1s ease-in, filter 1s ease-in;
 }
 
 .navbar.scrolled {
@@ -517,4 +534,3 @@ body{
   );
   box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
-
