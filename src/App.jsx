@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ReactTyped } from 'react-typed'
+import agroguardianImg from './assets/img/agroguardian.png'
+import verilensImg from './assets/img/verilens.png'
+import gatepassImg from './assets/img/gatepass.png'
 
 const BentoCard = ({ children, className = "", delay = 0, id = "", onClick }) => (
   <motion.div
@@ -114,7 +117,7 @@ function App() {
       link: 'https://agroguardian-frontend.vercel.app',
       backendLink: 'https://github.com/Adeyemiadigun/AgroGuardian_AI',
       frontendLink: 'https://github.com/Oriolowo-Mustapha/Agroguardian---Frontend',
-      image: '/src/assets/img/agroguardian.png',
+      image: agroguardianImg,
       modules: [
         { title: 'Carbon Credit & AI Verification', desc: 'Calculates tons CO2e using dynamic formulas (Area × CarbonFactor × CropMultiplier). Uses AI vision verification to validate sustainable practice evidence photos.' },
         { title: 'Enhanced Climate Risk System', desc: 'Produces context-aware risk assessments for Drought, Flood, and Heat. Generates "precision windows" for planting, harvesting, and spraying based on rain/wind constraints.' },
@@ -131,7 +134,7 @@ function App() {
       link: 'https://verilens-frontend.pxxl.click',
       backendLink: 'https://github.com/Oriolowo-Mustapha/VeriLens',
       frontendLink: 'https://github.com/Oriolowo-Mustapha/VeriLens-Frontend',
-      image: '/src/assets/img/verilens.png',
+      image: verilensImg,
       modules: [
         { title: 'AI News & Image Verification', desc: 'Analyzes news text and optional image uploads to provide a verdict (FAKE | REAL | SUSPICIOUS) with detailed reasoning.' },
         { title: 'Credibility Scoring', desc: 'Returns a confidence score from 0–100 based on AI analysis to help users gauge information certainty.' },
@@ -148,7 +151,7 @@ function App() {
       link: 'https://gatepass-code-generator-system-fron.vercel.app',
       backendLink: 'https://github.com/Oriolowo-Mustapha/Gatepass-Code-Generator-System',
       frontendLink: 'https://github.com/Oriolowo-Mustapha/Gatepass-Code-Generator-System-Frontend',
-      image: '/src/assets/img/gatepass.png',
+      image: gatepassImg,
       modules: [
         { title: 'QR Code Generation & Scanning', desc: 'Automated QR code generation for approved requests with built-in camera scanning for instant security verification.' },
         { title: 'Visitor Tracking & Logs', desc: 'Real-time monitoring of visitor check-in/check-out status with automated movement tracking and daily log reporting.' },
