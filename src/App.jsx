@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ReactTyped } from 'react-typed'
-import agroguardianImg from './assets/img/agroguardian.png'
-import verilensImg from './assets/img/verilens.png'
-import gatepassImg from './assets/img/gatepass.png'
 
 const BentoCard = ({ children, className = "", delay = 0, id = "", onClick }) => (
   <motion.div
@@ -117,7 +114,7 @@ function App() {
       link: 'https://agroguardian-frontend.vercel.app',
       backendLink: 'https://github.com/Adeyemiadigun/AgroGuardian_AI',
       frontendLink: 'https://github.com/Oriolowo-Mustapha/Agroguardian---Frontend',
-      image: agroguardianImg,
+      image: '/agroguardian.png',
       modules: [
         { title: 'Carbon Credit & AI Verification', desc: 'Calculates tons CO2e using dynamic formulas (Area × CarbonFactor × CropMultiplier). Uses AI vision verification to validate sustainable practice evidence photos.' },
         { title: 'Enhanced Climate Risk System', desc: 'Produces context-aware risk assessments for Drought, Flood, and Heat. Generates "precision windows" for planting, harvesting, and spraying based on rain/wind constraints.' },
@@ -134,7 +131,7 @@ function App() {
       link: 'https://verilens-frontend.pxxl.click',
       backendLink: 'https://github.com/Oriolowo-Mustapha/VeriLens',
       frontendLink: 'https://github.com/Oriolowo-Mustapha/VeriLens-Frontend',
-      image: verilensImg,
+      image: '/verilens.png',
       modules: [
         { title: 'AI News & Image Verification', desc: 'Analyzes news text and optional image uploads to provide a verdict (FAKE | REAL | SUSPICIOUS) with detailed reasoning.' },
         { title: 'Credibility Scoring', desc: 'Returns a confidence score from 0–100 based on AI analysis to help users gauge information certainty.' },
@@ -151,7 +148,7 @@ function App() {
       link: 'https://gatepass-code-generator-system-fron.vercel.app',
       backendLink: 'https://github.com/Oriolowo-Mustapha/Gatepass-Code-Generator-System',
       frontendLink: 'https://github.com/Oriolowo-Mustapha/Gatepass-Code-Generator-System-Frontend',
-      image: gatepassImg,
+      image: '/gatepass.png',
       modules: [
         { title: 'QR Code Generation & Scanning', desc: 'Automated QR code generation for approved requests with built-in camera scanning for instant security verification.' },
         { title: 'Visitor Tracking & Logs', desc: 'Real-time monitoring of visitor check-in/check-out status with automated movement tracking and daily log reporting.' },
@@ -228,7 +225,7 @@ function App() {
             <a href="#contact" className="hover:text-white transition-colors">Contact</a>
           </nav>
           <div className="flex gap-4">
-             <a href="/public/Oriolowo Mustapha - Detailed Resume.docx (1).pdf" download className="hidden sm:block px-6 py-2 border border-slate-700 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-slate-800 transition-all">Résumé</a>
+             <a href="/resume.pdf" download className="hidden sm:block px-6 py-2 border border-slate-700 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-slate-800 transition-all">Résumé</a>
              <a href="https://wa.me/2347031602720" target="_blank" rel="noopener noreferrer" className="px-6 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full text-[10px] font-bold uppercase tracking-widest hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] transition-all">Let's Talk</a>
           </div>
         </div>
@@ -254,7 +251,7 @@ function App() {
             </p>
             <div className="flex gap-4">
                <a href="#work" className="px-8 py-3 bg-orange text-white rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-orange/90 transition-all shadow-lg shadow-orange/20">Explore Work</a>
-               <a href="/public/Oriolowo Mustapha - Detailed Resume.docx (1).pdf" download className="px-8 py-3 bg-slate-800 text-white rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-slate-700 transition-all">Resume</a>
+               <a href="/resume.pdf" download className="px-8 py-3 bg-slate-800 text-white rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-slate-700 transition-all">Resume</a>
             </div>
           </BentoCard>
 
