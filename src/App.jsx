@@ -140,20 +140,20 @@ function App() {
       ]
     },
     {
-      title: 'Gatepass System',
-      category: 'SECURITY · ACCESS',
-      description: 'A secure, role-based Gatepass Management REST API and frontend built with .NET 10 and Clean Architecture. It manages controlled organization access via unique QR codes, visitor tracking, and automated security workflows.',
-      longDescription: 'Gatepass System is an enterprise-grade solution for managing organizational security and visitor movement. It features a modern, responsive UI built with Tailwind CSS and a robust .NET 10 backend. The system supports multi-role access (Administrator, Host, Security), real-time QR code verification via device cameras, and comprehensive reporting on visitor logs and overstay alerts.',
-      stack: ['.NET 10', 'ASP.NET Core', 'PostgreSQL', 'EF Core', 'MediatR', 'CQRS', 'FluentValidation', 'Tailwind CSS', 'Vanilla JavaScript', 'QR Scanner'],
-      link: 'https://gatepass-code-generator-system-fron.vercel.app',
-      backendLink: 'https://github.com/Oriolowo-Mustapha/Gatepass-Code-Generator-System',
-      frontendLink: 'https://github.com/Oriolowo-Mustapha/Gatepass-Code-Generator-System-Frontend',
-      image: '/gatepass.png',
+      title: 'AjoCore',
+      category: 'FINTECH · FULL-STACK',
+      description: 'A production-grade cooperative savings platform that digitizes traditional Nigerian Ajo/Esusu. It automates contributions, rotational payouts, and group lifecycle management with real-time payment processing via Nomba virtual accounts and webhooks.',
+      longDescription: 'AjoCore replaces the informal, trust-based Ajo/Esusu savings model with a digital-first system. Cooperative Admins create savings groups, configure saving cycles (Personal, ROSCA, or ASCA schemes), and monitor contribution/payout ledgers. Traders discover and join groups, contribute via auto-generated virtual bank accounts, and receive automated rotational payouts. System Admins oversee platform-wide metrics and the Nomba wallet. Every naira is tracked through granular ledgers (ContributionLedger, PayoutLedger, ReversalLedger), and all payments are processed in real-time via Nomba\'s webhook infrastructure — no manual reconciliation required.',
+      stack: ['React 19', '.NET 10', 'TypeScript', 'PostgreSQL', 'Nomba API', 'MediatR', 'CQRS', 'Hangfire', 'TanStack Query', 'Tailwind CSS v4', 'Framer Motion', 'Zod', 'EF Core', 'FluentValidation', 'Docker'],
+      link: 'https://ajo-core-frontend-eta.vercel.app',
+      backendLink: 'https://github.com/Oriolowo-Mustapha/AjoCore---Backend',
+      frontendLink: 'https://github.com/Adeyemiadigun/AjoCore--Frontend',
+      image: '/Ajocore.png',
       modules: [
-        { title: 'QR Code Generation & Scanning', desc: 'Automated QR code generation for approved requests with built-in camera scanning for instant security verification.' },
-        { title: 'Visitor Tracking & Logs', desc: 'Real-time monitoring of visitor check-in/check-out status with automated movement tracking and daily log reporting.' },
-        { title: 'Role-Based Security', desc: 'Granular access control for Admins, Hosts, and Security personnel, featuring JWT-based authentication and secure password recovery.' },
-        { title: 'Clean Architecture', desc: 'Built with MediatR (CQRS) and Clean Architecture principles to ensure scalability, testability, and maintainable code structure.' }
+        { title: 'Real-Time Payment Processing', desc: 'Dynamic Nomba virtual accounts per user, inbound payment detection via signed webhooks, and automated contribution recording with duplicate protection.' },
+        { title: 'Rotational Payout Engine', desc: 'Automated scheduling and execution of rotational payouts with reorderable payout slots and early liquidation support (with 5% penalty).' },
+        { title: 'Automated Background Jobs', desc: 'Hangfire-powered recurring tasks for liquidation sweeps, reversal processing, and email reminders for upcoming/overdue contributions.' },
+        { title: 'Multi-Role Dashboards', desc: 'Role-specific dashboards (Trader, Cooperative Admin, System Admin) with real-time balance cards, cycle progress tracking, and contribution charts via Recharts.' }
       ]
     },
     {
@@ -200,6 +200,23 @@ function App() {
         { title: 'On-Chain Automation', desc: 'Watches FEVM smart contracts for events and automatically records verified matches back to the blockchain.' },
         { title: 'IPFS Integration', desc: 'Securely pins item images to IPFS via Pinata for decentralized storage and AI vision retrieval.' },
         { title: 'Smart Contract Layer', desc: 'Solidity-based registry on Filecoin EVM that handles tamper-resistant storage of reported items.' }
+      ]
+    },
+    {
+      title: 'Gatepass System',
+      category: 'SECURITY · ACCESS',
+      description: 'A secure, role-based Gatepass Management REST API and frontend built with .NET 10 and Clean Architecture. It manages controlled organization access via unique QR codes, visitor tracking, and automated security workflows.',
+      longDescription: 'Gatepass System is an enterprise-grade solution for managing organizational security and visitor movement. It features a modern, responsive UI built with Tailwind CSS and a robust .NET 10 backend. The system supports multi-role access (Administrator, Host, Security), real-time QR code verification via device cameras, and comprehensive reporting on visitor logs and overstay alerts.',
+      stack: ['.NET 10', 'ASP.NET Core', 'PostgreSQL', 'EF Core', 'MediatR', 'CQRS', 'FluentValidation', 'Tailwind CSS', 'Vanilla JavaScript', 'QR Scanner'],
+      link: 'https://gatepass-code-generator-system-fron.vercel.app',
+      backendLink: 'https://github.com/Oriolowo-Mustapha/Gatepass-Code-Generator-System',
+      frontendLink: 'https://github.com/Oriolowo-Mustapha/Gatepass-Code-Generator-System-Frontend',
+      image: '/gatepass.png',
+      modules: [
+        { title: 'QR Code Generation & Scanning', desc: 'Automated QR code generation for approved requests with built-in camera scanning for instant security verification.' },
+        { title: 'Visitor Tracking & Logs', desc: 'Real-time monitoring of visitor check-in/check-out status with automated movement tracking and daily log reporting.' },
+        { title: 'Role-Based Security', desc: 'Granular access control for Admins, Hosts, and Security personnel, featuring JWT-based authentication and secure password recovery.' },
+        { title: 'Clean Architecture', desc: 'Built with MediatR (CQRS) and Clean Architecture principles to ensure scalability, testability, and maintainable code structure.' }
       ]
     }
   ];
