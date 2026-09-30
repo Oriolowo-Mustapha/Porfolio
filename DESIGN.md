@@ -58,6 +58,26 @@ the viewport, not the content.
 - Font Awesome / Devicon CDN `<i>` elements (replaced by `lucide-react`)
 - Body copy in ink-faint · any text under 11px
 
+## Navigation
+
+One nav, two viewports. Both render the same anchors and share one active
+state, so they can never disagree.
+
+- **≥768px** — expanded inline row in the header. Active item carries a 1px
+  signal underline that scales in below the text.
+- **<768px** — `BottomNavBar`, fixed to the viewport bottom within thumb reach.
+  Square, hairline-bordered, paper-coloured. No hamburger sheet: that would be
+  a third presentation of the same five links.
+- **Active state is scroll-derived**, not click-derived. `useActiveSection`
+  sorts sections by document offset before matching, because nav order is
+  editorial while DOM order is spatial and the two disagree. It reads
+  `scroll-padding-top` from CSS for its header offset, so a tapped link
+  highlights the section it landed on.
+- The bottom bar sits directly after `<header>` in the DOM despite rendering
+  at the bottom, so keyboard users reach primary navigation within the first
+  few tab stops. `position: fixed` makes this free.
+- `body` carries `pb-14 md:pb-0` so the bar never covers the last line.
+
 ## Layout
 
 Max measure `68ch` for prose, `1200px` page. Sections separated by `1px` rules,
