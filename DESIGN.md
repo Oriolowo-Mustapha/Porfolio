@@ -60,27 +60,45 @@ the viewport, not the content.
 
 ## Navigation
 
-**One floating dock, every viewport.** `src/components/ui/nav-dock.tsx` is the
-only navigation in the product — the header carries just the wordmark and a
-Résumé link.
+**Two presentations, one set of links, never both at once.** `nav` in
+`src/lib/site.ts` is the single source; each viewport gets the presentation that
+fits it.
 
-- A pill resting on the page: near-white surface, hairline border, warm
-  ink-tinted shadow, full rounding. Items are icon-only wells below `sm`;
-  from `sm` up every label is shown and only the active item carries a fill.
-- Résumé lives inside the pill as a download. It is not a route, so it never
-  reads as the current page.
-- The dock is the single deliberate exception to the 2px-radius, no-shadow
-  rules. It is a physical card lying on the sheet, so it needs to read as
-  lifted off the page. Everything else keeps the hairline treatment.
-- Position is `fixed` at the bottom, but the element sits directly after
-  `<header>` in the DOM so keyboard users reach it at tab stop 2.
-- `body` carries `pb-24 sm:pb-20` so the dock never covers the last line.
-- Tap targets are 44×44 minimum at every viewport.
+| Viewport | Surface | Item |
+|---|---|---|
+| below `lg` (1024px) | `NavDock` — fixed pill, bottom centre | 44×44 icon well; the active one expands to show its label |
+| `lg` and up | `SiteHeader` — inline list in the sticky header | text label, ochre underline on the active item |
+
+The two are switched by `hidden lg:block` on the header nav and `lg:hidden` on
+the dock. That is a `display: none` removal, so at any width exactly one
+`aria-label="Primary"` landmark exists. Two landmarks carrying the same five
+links at once would be a duplicate-navigation failure, so the DOM holds both
+and the accessibility tree holds one. Verified at 390 / 768 / 1024 / 1440.
+
+**Why `lg` and not `sm`.** The header has to fit a wordmark, five text labels
+and a bordered Résumé button without wrapping or clipping. Measured at 1024:
+nav is 445px in a 1009px container, landing exactly on the inner limit with the
+32px gutter intact. Below 1024 there is not room for that, so the dock carries
+the viewport instead — which is also where a thumb can reach it.
+
+- Résumé is a download, not a route, so it never reads as the current page. It
+  sits inside whichever surface is live: in the dock's pill below `lg`, in the
+  header list with a leading hairline divider at `lg` and up. Never both.
+- The header underline is a hairline, not a filled pill. That row sits on a
+  ruled header; a fill would fight the rule.
+- `body` carries `pb-24 lg:pb-0`. The dock is 70px tall and only exists below
+  `lg`, so above that its height is owed nothing.
+- Dock labels collapse with `grid-template-columns: 0fr → 1fr`, never an
+  animated width — see [Label reveal](#label-reveal).
+- Tap targets in the dock are 44×44. Header items are 32px tall, which is the
+  size inline text navigation is meant to be; the 44px rule is a touch-target
+  rule and does not apply to a pointer-driven row.
 
 ### Routes
 
-`nav` in `src/lib/site.ts` holds real routes, so the dock's active state is the
-pathname (`aria-current="page"`) and there is nothing to observe.
+`nav` in `src/lib/site.ts` holds real routes, so the active state is the
+pathname (`aria-current="page"`) in both surfaces and there is nothing to
+observe.
 
 | Route | Contents |
 |---|---|
@@ -97,12 +115,18 @@ pages should feel like turning a leaf.
 
 ### Label reveal
 
-Done with `grid-template-columns: 0fr → 1fr`, not an animated width. It needs
-no measurement pass and no inline width style, so no second rule can
-contradict it, and being a plain CSS transition it runs off the main thread.
-An earlier animated-width version had to be driven against measured pixel
-values because animating to `"auto"` raced the collapse and left labels
-intermittently stuck at zero.
+Dock labels collapse with `grid-template-columns: 0fr → 1fr`, not an animated
+width. It needs no measurement pass and no inline width style, so no second rule
+can contradict it, and being a plain CSS transition it runs off the main thread.
+An earlier animated-width version had to be driven against measured pixel values
+because animating to `"auto"` raced the collapse and left labels intermittently
+stuck at zero.
+
+`0fr` resolves to `minmax(0, 0fr)`, which is what permits the collapse; `1fr`
+would be `minmax(auto, 1fr)` and refuse. The inner span needs `overflow-hidden`
+for the same reason — it caps the min-content contribution so the track can
+reach zero. No `aria-hidden`: collapsing is purely visual, and the link must
+stay named at every viewport.
 
 ### Role rotator
 
@@ -114,11 +138,17 @@ skips ticks while the tab is hidden.
 
 ### Scrolling
 
-Anchor scrolling is implemented in `src/lib/scroll.ts` rather than left to
-`scroll-behavior: smooth`, which was verified failing silently — `scrollTo`
-reported no movement at all while the same call with `behavior: "instant"`
-worked. The tween is rAF-driven with `easeOutExpo` and a hard deadline, so the
-destination is guaranteed even where frames are scarce.
+There is none, and that is a decision rather than an omission. Native smooth
+scrolling was verified failing silently — `scrollTo` reported no movement at all
+while the same call with `behavior: "instant"` worked — so it was replaced with a
+rAF tween in `src/lib/scroll.ts`. Once navigation became route-based, the last
+in-page anchor disappeared and the tween had no consumer. A 140-line module with
+zero importers is a trap for the next person, so it was deleted rather than kept
+warm. `scroll-padding-top: 5rem` stays to clear the sticky header for the skip
+link.
+
+Had in-page anchors returned, the tween was the right answer and worth restoring.
+Reach for it before reaching for `scroll-behavior`.
 
 ## Layout
 

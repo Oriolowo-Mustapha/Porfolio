@@ -79,7 +79,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${inter.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground antialiased pb-24 sm:pb-20">
+      {/* Bottom padding clears the dock, which only exists below `lg`. From
+          `lg` up the navigation is in the sticky header, so the dock's height
+          is not owed any space. */}
+      <body className="min-h-full flex flex-col bg-background text-foreground antialiased pb-24 lg:pb-0">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-100 focus:rounded-sm focus:border focus:border-ink focus:bg-paper-raised focus:px-4 focus:py-2 focus:text-sm"
@@ -87,10 +90,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <SiteHeader />
-        {/* The dock is `position: fixed`, so its DOM position does not affect
-            where it renders. It sits here, immediately after the header, so
-            keyboard users reach primary navigation in the first few tab stops
-            instead of after the entire page. */}
+        {/* Rendered on every route but hidden from `lg` up by NavDock itself, so
+            primary navigation sits in one landmark per viewport, never two. */}
         <NavDock />
         <main id="main" className="flex-1">
           {children}

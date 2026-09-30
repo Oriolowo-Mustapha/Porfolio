@@ -150,11 +150,13 @@
 
   html {
     @apply font-sans;
-    /* Deliberately NOT `scroll-behavior: smooth`. Anchor scrolling is driven
-       by src/lib/scroll.ts instead, which guarantees the destination lands.
-       Native smooth scrolling was verified failing silently in a Chromium
-       run, and a nav link that does nothing is worse than one that jumps. */
-    scroll-padding-top: 6rem;
+    /* No `scroll-behavior: smooth`. Native smooth scrolling was verified
+       failing silently in a Chromium run — `scrollTo` reported no movement
+       at all while the same call with `behavior: "instant"` worked. Nothing
+       animates scroll position now that navigation is route-based; the
+       remaining fragment link is the skip link, which should be instant
+       either way. */
+    scroll-padding-top: 5rem;
     -webkit-text-size-adjust: 100%;
   }
 
