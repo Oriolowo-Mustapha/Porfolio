@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { Label } from "@/components/primitives";
 import { RolesRotator } from "@/components/roles-rotator";
@@ -59,12 +59,14 @@ export function Hero() {
             >
               More about me
             </Link>
+            {/* No `download`: the PDF opens in the browser's viewer so it can be
+                read and searched. ArrowUpRight rather than a download glyph,
+                which would now contradict what the link does. */}
             <a
               href={site.resumeUrl}
-              download
               className="pressable inline-flex items-center gap-2 rounded-sm px-1 py-3 text-sm text-ink-muted transition-colors duration-150 hover:text-ink"
             >
-              <Download className="size-4" aria-hidden />
+              <ArrowUpRight className="size-4" aria-hidden />
               Résumé
             </a>
           </div>

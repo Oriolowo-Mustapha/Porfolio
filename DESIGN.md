@@ -60,49 +60,61 @@ the viewport, not the content.
 
 ## Navigation
 
-**Two presentations, one set of links, never both at once.** `nav` in
+**Two presentations of one pill, never both at once.** `nav` in
 `src/lib/site.ts` is the single source; each viewport gets the presentation that
-fits it.
+fits it. Both presentations come from the same component,
+`src/components/ui/bottom-nav-bar.tsx`, so they cannot drift apart.
 
 | Viewport | Surface | Item |
 |---|---|---|
-| below `lg` (1024px) | `NavDock` — fixed pill, bottom centre | 44×44 icon well; the active one expands to show its label |
-| `lg` and up | `SiteHeader` — inline list in the sticky header | text label, ochre underline on the active item |
+| below `md` (768px) | fixed pill, bottom centre | 44×44 icon well; the active one expands to show its label |
+| `md` and up | same pill, expanded, centred in the sticky header | icon + text label on every item |
 
-The two are switched by `hidden lg:block` on the header nav and `lg:hidden` on
-the dock. That is a `display: none` removal, so at any width exactly one
-`aria-label="Primary"` landmark exists. Two landmarks carrying the same five
-links at once would be a duplicate-navigation failure, so the DOM holds both
-and the accessibility tree holds one. Verified at 390 / 768 / 1024 / 1440.
+The two are switched by `hidden md:block` on the header pill and `md:hidden` on
+its bottom wrapper. That is a `display: none` removal, so at any width exactly
+one `aria-label="Primary"` landmark exists. Two landmarks carrying the same six
+links at once would be a duplicate-navigation failure, so the DOM holds both and
+the accessibility tree holds one. Verified at 390 / 430 / 767 / 768 / 834 /
+1024 / 1440.
 
-**Why `lg` and not `sm`.** The header has to fit a wordmark, five text labels
-and a bordered Résumé button without wrapping or clipping. Measured at 1024:
-nav is 445px in a 1009px container, landing exactly on the inner limit with the
-32px gutter intact. Below 1024 there is not room for that, so the dock carries
-the viewport instead — which is also where a thumb can reach it.
+The desktop pill is centred by `grid-cols-[1fr_auto_1fr]` on the header row, not
+by a fixed-width spacer opposite the wordmark. A spacer has to hard-code the
+wordmark's measured width, and that drifts by a few pixels when the font or the
+letter-spacing changes. Equal side tracks centre it by construction.
 
-- Résumé is a download, not a route, so it never reads as the current page. It
-  sits inside whichever surface is live: in the dock's pill below `lg`, in the
-  header list with a leading hairline divider at `lg` and up. Never both.
-- The header underline is a hairline, not a filled pill. That row sits on a
-  ruled header; a fill would fight the rule.
-- `body` carries `pb-24 lg:pb-0`. The dock is 70px tall and only exists below
-  `lg`, so above that its height is owed nothing.
-- Dock labels collapse with `grid-template-columns: 0fr → 1fr`, never an
-  animated width — see [Label reveal](#label-reveal).
-- Tap targets in the dock are 44×44. Header items are 32px tall, which is the
-  size inline text navigation is meant to be; the 44px rule is a touch-target
-  rule and does not apply to a pointer-driven row.
+**Why `md` and not `sm`.** The expanded pill is 602px. At 768 it lands centred in
+a 720px content box with both gutters intact, and every item clears 87px. Below
+that there is no width to spend on an expanded row, so the collapsed pill owns
+the viewport — which is also where a thumb can reach it.
+
+- Résumé is a file, not a route, so it never reads as the current page and
+  carries no `aria-current`. It sits inside whichever pill is live.
+- Résumé **opens in the browser**, it does not download. The `download`
+  attribute is gone from all three links (header pill, bottom pill, hero). The
+  PDF is served as `application/pdf` with no `Content-Disposition: attachment`,
+  so the browser's own viewer takes it and the visitor can read and search it.
+  A plain `<a>` is used rather than `<Link>`, because client-side routing to a
+  file tries to render the response as a page.
+- The hero link's icon is `ArrowUpRight`, not a download glyph. The icon has to
+  agree with what the link does.
+- `body` carries `pb-28 md:pb-0`. The bottom pill is 68px tall and sits 16px off
+  the viewport floor, and only exists below `md`, so above that it is owed
+  nothing.
+- Tap targets are 44×44 in both presentations — the desktop row is the same
+  component, so it does not get a smaller target just because a pointer is
+  driving it.
 
 ### Routes
 
 `nav` in `src/lib/site.ts` holds real routes, so the active state is the
 pathname (`aria-current="page"`) in both surfaces and there is nothing to
-observe.
+observe. There is deliberately no `useState` index in the component: these are
+links to routes, so local state would light up the wrong item after any
+back/forward navigation or a direct URL load.
 
 | Route | Contents |
 |---|---|
-| `/` | Hero with rotating role titles, and the three headline projects |
+| `/` | Hero with rotating role titles, the role timeline, and the three headline projects |
 | `/about` | Biography, education, current focus |
 | `/roles` | The role timeline |
 | `/skills` | The stack, grouped by the part of the system it serves |
@@ -115,12 +127,22 @@ pages should feel like turning a leaf.
 
 ### Label reveal
 
-Dock labels collapse with `grid-template-columns: 0fr → 1fr`, not an animated
-width. It needs no measurement pass and no inline width style, so no second rule
-can contradict it, and being a plain CSS transition it runs off the main thread.
-An earlier animated-width version had to be driven against measured pixel values
-because animating to `"auto"` raced the collapse and left labels intermittently
-stuck at zero.
+The collapsed pill reveals one label at a time. Mobile animates the active
+label's width between `0px` and a fixed 72px — never `"auto"`, which raced the
+collapse and left labels intermittently stuck at zero. 72px holds the longest
+label ("Say hello" → "Résumé") at 13px, and nothing else is ever shown there, so
+it can be a constant instead of a measurement pass.
+
+The expanded pill does **not** animate label width at all. The set of labels
+never changes between items, so there is nothing to animate, and static auto
+width means no label can be clipped by a fixed pixel guess.
+
+Only the label widths are JavaScript. The pill's entrance is CSS
+(`@starting-style` on `.pill-enter`, alongside `.reveal`) because a JS-driven
+`initial` painted `opacity: 0` into the SSR HTML and then failed to match for
+anyone whose OS has reduced motion enabled — `useReducedMotion` reports false on
+the server and true on the client. The pill is present on every route, so that
+mismatch was on every page.
 
 `0fr` resolves to `minmax(0, 0fr)`, which is what permits the collapse; `1fr`
 would be `minmax(auto, 1fr)` and refuse. The inner span needs `overflow-hidden`

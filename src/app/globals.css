@@ -255,11 +255,34 @@
       clip-path: inset(0 0 100% 0);
     }
   }
+  /* Nav pill entrance. Same @starting-style treatment as .reveal, and for the
+     same reason it must stay CSS-only: driving the pill's entrance from
+     JavaScript meant painting `opacity: 0` into the SSR HTML, which then
+     failed to match for anyone whose OS has reduced motion enabled (the hook
+     reports false on the server, true on the client). The pill is the one
+     element present on every route, so that mismatch was on every page. */
+  .pill-enter {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 420ms var(--ease-out-expo),
+      transform 420ms var(--ease-out-expo);
+  }
+  @starting-style {
+    .pill-enter {
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+    }
+  }
   @media (prefers-reduced-motion: reduce) {
     .reveal {
       transition: opacity 200ms linear;
       transform: none;
       clip-path: none;
+    }
+    .pill-enter {
+      transition: opacity 200ms linear;
+      transform: none;
     }
     *,
     *::before,

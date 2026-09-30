@@ -3,7 +3,7 @@ import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 
 import { Footer } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { NavDock } from "@/components/ui/nav-dock";
+import { BottomNavBar } from "@/components/ui/bottom-nav-bar";
 import { site } from "@/lib/site";
 
 import "./globals.css";
@@ -79,10 +79,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${inter.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} h-full`}
     >
-      {/* Bottom padding clears the dock, which only exists below `lg`. From
-          `lg` up the navigation is in the sticky header, so the dock's height
-          is not owed any space. */}
-      <body className="min-h-full flex flex-col bg-background text-foreground antialiased pb-24 lg:pb-0">
+      {/* Bottom padding clears the pill, which is only rendered below `md`.
+          From `md` up the expanded pill lives in the header, so the floating
+          one is gone and owes no space. */}
+      <body className="min-h-full flex flex-col bg-background text-foreground antialiased pb-28 md:pb-0">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-100 focus:rounded-sm focus:border focus:border-ink focus:bg-paper-raised focus:px-4 focus:py-2 focus:text-sm"
@@ -90,9 +90,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <SiteHeader />
-        {/* Rendered on every route but hidden from `lg` up by NavDock itself, so
-            primary navigation sits in one landmark per viewport, never two. */}
-        <NavDock />
+        {/* Mobile navigation. `hidden` from `md` up, where the header renders
+            the expanded pill instead — one aria-label="Primary" per viewport. */}
+        <div className="md:hidden">
+          <BottomNavBar stickyBottom />
+        </div>
         <main id="main" className="flex-1">
           {children}
         </main>
