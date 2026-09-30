@@ -22,12 +22,26 @@ export const site = {
   },
 } as const;
 
+/**
+ * Primary navigation. These are real routes, not in-page anchors, so the
+ * dock's active state comes from the pathname rather than scroll position.
+ * `icon` is a key rather than a component so this stays serialisable and
+ * usable from server components.
+ */
 export const nav = [
-  { label: "Index", href: "/#index" },
-  { label: "Work", href: "/#work" },
-  { label: "About", href: "/#about" },
-  { label: "Experience", href: "/#experience" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Home", href: "/", icon: "home" },
+  { label: "About", href: "/about", icon: "about" },
+  { label: "Roles", href: "/roles", icon: "roles" },
+  { label: "Skills", href: "/skills", icon: "skills" },
+  { label: "Say hello", href: "/say-hello", icon: "contact" },
+] as const;
+
+/** Rotating titles in the hero. Also shown all at once under reduced motion. */
+export const roleTitles = [
+  "Software Engineer",
+  "Backend Developer",
+  "Clean Architecture Practitioner",
+  "AI Integration Engineer",
 ] as const;
 
 export const bio = [

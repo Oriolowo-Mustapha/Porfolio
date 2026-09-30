@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import { Label, SectionHeading } from "@/components/primitives";
+import { Label } from "@/components/primitives";
 import { projects, type Project } from "@/lib/projects";
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -11,16 +11,15 @@ export function ProjectIndex({ limit }: { limit?: number }) {
   const list = (limit ? projects.slice(0, limit) : projects) as readonly Project[];
 
   return (
-    <section
-      id="work"
-      aria-labelledby="work-heading"
-      className="border-b border-rule"
-    >
-      <div className="mx-auto max-w-[1200px] px-5 py-20 sm:px-8 sm:py-24">
-        <SectionHeading label="Selected work" numeral="01" />
-        <h2 id="work-heading" className="sr-only">
-          Selected work
-        </h2>
+    <section id="work" aria-labelledby="work-heading" className="border-b border-rule">
+      <div className="mx-auto max-w-[1200px] px-5 py-16 sm:px-8 sm:py-20">
+        <div className="flex items-baseline gap-4">
+          <Label className="text-signal tabular-nums">05</Label>
+          <h2 id="work-heading" className="font-display text-3xl sm:text-4xl">
+            Selected work
+          </h2>
+          <div aria-hidden className="mb-1.5 h-px flex-1 bg-rule" />
+        </div>
 
         <p className="mt-6 max-w-xl text-ink-muted">
           Flagship builds spanning AI verification, security infrastructure,

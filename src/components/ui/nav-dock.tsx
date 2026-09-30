@@ -1,95 +1,52 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   House,
-  FolderGit2,
   User,
   Briefcase,
-  Mail,
+  Blocks,
+  MessageCircle,
+  FileText,
   type LucideIcon,
 } from "lucide-react";
 
-import { useActiveSection } from "@/hooks/use-active-section";
-import { useAnchoredLinks } from "@/lib/scroll";
-import { nav } from "@/lib/site";
+import { nav, site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-/** Icons are keyed by anchor id, not array position, so this list cannot
-    silently attach the wrong glyph if `nav` is reordered. */
 const icons: Record<string, LucideIcon> = {
-  index: House,
-  work: FolderGit2,
+  home: House,
   about: User,
-  experience: Briefcase,
-  contact: Mail,
+  roles: Briefcase,
+  skills: Blocks,
+  contact: MessageCircle,
 };
-
-const anchors = nav.map((n) => n.href.replace("/#", ""));
 
 /**
  * Floating navigation dock — one component for every viewport.
  *
- * A pill resting on the page: items are icon-only wells until one is active,
- * and the active item grows to reveal its label on a filled pill.
+ * The label reveal is done with `grid-template-columns: 0fr → 1fr` rather than
+ * an animated width. Two reasons: it needs no measurement pass and no
+ * inline width style, so there is no second rule that can contradict it; and
+ * it is a plain CSS transition, which runs off the main thread. An animated
+ * width here previously had to be driven against measured pixel values because
+ * animating to `"auto"` raced the collapse and left labels stuck at zero.
  *
- * Sizing note. The anchor carries no `w-*` utility. Width comes entirely from
- * the animated label span, so an item grows with its own content and there is
- * no second width rule to contradict it. An earlier version used `w-11` plus a
- * conditional `sm:w-auto`, and because Tailwind resolves conflicting
- * utilities by stylesheet order rather than class order, the active item
- * silently stayed collapsed at desktop widths. `min-w-11` is safe alongside
- * this because it only sets a floor.
+ * Below `sm` the inactive labels collapse to nothing, so the dock is a row of
+ * icon wells and the active item expands. From `sm` up every label is shown,
+ * matching the reference: the pill grows wide enough for the full set, and
+ * only the active item carries a fill.
  *
- * Label widths are measured rather than animated to `"auto"`. Motion has to
- * take its own measurement pass when the target is `auto`, and that races the
- * collapse: the label intermittently ended up stuck at zero width. Measuring
- * once and animating to a pixel value removes the race entirely.
+ * Active state is the pathname. These are routes, not anchors, so there is
+ * nothing to observe.
  */
 export function NavDock({ className }: { className?: string }) {
-  const reduce = useReducedMotion();
-  const active = useActiveSection(anchors);
-  const onLinkClick = useAnchoredLinks();
-  const listRef = useRef<HTMLUListElement>(null);
-  const [widths, setWidths] = useState<Record<string, number>>({});
-
-  // Measure every label's natural width, then animate to those numbers.
-  // Re-measured on resize because a wider viewport can change wrapping or
-  // sub-pixel rounding even though these labels never wrap.
-  useLayoutEffect(() => {
-    const measure = () => {
-      const list = listRef.current;
-      if (!list) return;
-
-      const next: Record<string, number> = {};
-      list.querySelectorAll<HTMLElement>("[data-label]").forEach((el) => {
-        const id = el.dataset.label;
-        if (id) next[id] = el.scrollWidth;
-      });
-
-      setWidths((prev) => {
-        const same =
-          Object.keys(next).length === Object.keys(prev).length &&
-          Object.entries(next).every(([k, v]) => prev[k] === v);
-        return same ? prev : next;
-      });
-    };
-
-    measure();
-
-    // Web fonts land after first paint and change label widths.
-    void document.fonts?.ready.then(measure);
-    window.addEventListener("resize", measure);
-
-    return () => window.removeEventListener("resize", measure);
-  }, []);
+  const pathname = usePathname();
 
   return (
-    <motion.nav
+    <nav
       aria-label="Primary"
-      initial={false}
-      animate={reduce ? undefined : { y: 0, opacity: 1 }}
       className={cn(
         "pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-3",
         "pb-[max(0.75rem,env(safe-area-inset-bottom))]",
@@ -97,35 +54,28 @@ export function NavDock({ className }: { className?: string }) {
       )}
     >
       <ul
-        ref={listRef}
         className={cn(
-          "pointer-events-auto flex items-center gap-1 rounded-full",
+          "pointer-events-auto flex items-center gap-0.5 rounded-full",
           "border border-dock-border bg-dock/85 p-1.5 backdrop-blur-xl",
           "shadow-[var(--dock-shadow)]",
         )}
       >
         {nav.map((item) => {
-          const id = item.href.replace("/#", "");
-          const Icon = icons[id] ?? House;
-          const isActive = active === id;
-          const labelWidth = widths[id] ?? 0;
-          // Until measured, or if measuring returned nothing, snap the label
-          // open rather than animating toward a zero width.
-          const measured = labelWidth > 0;
+          const Icon = icons[item.icon] ?? House;
+          const isActive = pathname === item.href;
 
           return (
             <li key={item.href}>
-              <a
+              <Link
                 href={item.href}
-                onClick={onLinkClick}
-                aria-current={isActive ? "true" : undefined}
-                title={item.label}
+                aria-current={isActive ? "page" : undefined}
                 className={cn(
-                  "pressable relative flex h-11 min-w-11 items-center rounded-full sm:h-12",
+                  "pressable flex h-11 items-center rounded-full",
                   "text-ink-muted transition-colors duration-200 hover:text-ink",
-                  "justify-center px-2.5",
-                  isActive &&
-                    "justify-start bg-dock-active px-3.5 text-ink sm:px-4",
+                  "px-3",
+                  // Gap and padding are driven off state rather than emitted
+                  // as a competing utility, so there is only ever one rule.
+                  isActive ? "gap-2 bg-dock-active px-4 text-ink" : "gap-0 sm:gap-2",
                 )}
               >
                 <Icon
@@ -134,52 +84,59 @@ export function NavDock({ className }: { className?: string }) {
                   aria-hidden
                   className="shrink-0 transition-colors duration-200"
                 />
-
-                <motion.span
-                  data-label={id}
-                  initial={false}
-                  animate={{
-                    // Width is part of the target in both motion modes; only
-                    // the transition differs. Reduced motion collapses to a
-                    // 120ms fade. Animating opacity alone would leave the
-                    // active item permanently unlabelled, which is worse
-                    // than no motion at all.
-                    width: isActive
-                      ? measured
-                        ? labelWidth
-                        : "auto"
-                      : 0,
-                    opacity: isActive ? 1 : 0,
-                    marginLeft: isActive ? 8 : 0,
-                  }}
-                  transition={
-                    reduce
-                      ? { duration: 0.12 }
-                      : {
-                          // A short tween rather than a spring. The label has a
-                          // known width, so there is nothing for a spring to
-                          // resolve, and a spring on `width` needs many frames
-                          // to look settled — which reads as lag on any machine
-                          // that is not comfortably hitting 60fps. 220ms with
-                          // the site's own ease-out curve matches the rest of
-                          // the motion budget in DESIGN.md.
-                          duration: 0.22,
-                          ease: [0.23, 1, 0.32, 1],
-                        }
-                  }
-                  className={cn(
-                    "inline-block overflow-hidden whitespace-nowrap text-ink",
-                    "text-[13px] font-medium leading-none sm:text-sm",
-                  )}
-                >
-                  {item.label}
-                </motion.span>
-              </a>
+                <Label text={item.label} open={isActive} />
+              </Link>
             </li>
           );
         })}
+
+        {/* Résumé is a download, not a route, so it never reads as "current".
+            It lives in the pill because the reference shows it there. */}
+        <li>
+          <a
+            href={site.resumeUrl}
+            download
+            className={cn(
+              "pressable flex h-11 items-center rounded-full px-3",
+              "gap-0 text-ink-muted transition-colors duration-200 hover:text-ink sm:gap-2",
+            )}
+          >
+            <FileText size={20} strokeWidth={1.6} aria-hidden className="shrink-0" />
+            <Label text="Résumé" open={false} />
+          </a>
+        </li>
       </ul>
-    </motion.nav>
+    </nav>
+  );
+}
+
+/**
+ * A label that is always visible from `sm` up, and collapses to zero width
+ * below `sm` unless it is the active item.
+ *
+ * `0fr` resolves to `minmax(0, 0fr)`, which is what allows the track to
+ * collapse; `1fr` would be `minmax(auto, 1fr)` and refuse. The inner span
+ * needs `overflow-hidden` for the same reason — it caps the min-content
+ * contribution so the track can actually reach zero.
+ *
+ * No `aria-hidden`. Collapsing a label is purely visual; the text stays in the
+ * accessibility tree so the link is always named, at every viewport.
+ */
+function Label({ text, open }: { text: string; open: boolean }) {
+  return (
+    <span
+      className={cn(
+        "grid transition-[grid-template-columns,opacity] duration-200 ease-out-expo",
+        "sm:transition-none",
+        open
+          ? "grid-cols-[1fr] opacity-100"
+          : "grid-cols-[0fr] opacity-0 sm:grid-cols-[1fr] sm:opacity-100",
+      )}
+    >
+      <span className="overflow-hidden whitespace-nowrap text-[13px] font-medium leading-none sm:text-sm">
+        {text}
+      </span>
+    </span>
   );
 }
 

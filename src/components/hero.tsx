@@ -3,37 +3,21 @@ import Link from "next/link";
 import { ArrowRight, Download } from "lucide-react";
 
 import { Label } from "@/components/primitives";
-import { site, summary } from "@/lib/site";
+import { RolesRotator } from "@/components/roles-rotator";
+import { site } from "@/lib/site";
 
 /**
+ * Home hero: who he is, what he does, and the three headline numbers.
+ *
  * Structure adapted from 21st.dev `hero-04` (Editorial Collage): two columns,
  * serif headline, description, paired CTAs, layered media over a soft wash.
- *
- * Two changes from the source:
- *  1. Entrances use `@starting-style` + clip-path in CSS rather than motion's
- *     `whileInView` — off the main thread, and no `opacity: 0` flash of
- *     unhydrated content.
- *  2. `useReducedMotion` gating is handled globally in globals.css.
+ * Entrances use CSS rather than motion so they run off the main thread and
+ * cannot flash unhydrated `opacity: 0` content.
  */
 export function Hero() {
   return (
-    <section
-      id="index"
-      aria-labelledby="hero-heading"
-      className="relative isolate overflow-hidden border-b border-rule"
-    >
-      {/* Soft wash behind the collage. Blurred, masked to a radial, and
-          aria-hidden — it is atmosphere, not content. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-70 blur-3xl"
-        style={{
-          background:
-            "radial-gradient(60% 55% at 78% 18%, var(--signal-soft) 0%, transparent 62%)",
-        }}
-      />
-
-      <div className="mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-14 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+    <section aria-labelledby="hero-heading" className="border-b border-rule">
+      <div className="mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-14 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
         <div className="flex flex-col items-start">
           <Label className="reveal">
             {site.role} — {site.location}
@@ -48,16 +32,14 @@ export function Hero() {
             Mustapha<span className="text-signal">.</span>
           </h1>
 
+          <RolesRotator />
+
           <p className="reveal mt-7 max-w-lg text-lg leading-relaxed text-ink-muted sm:text-xl">
             I build{" "}
             <span className="text-ink">secure, scalable backends</span> with{" "}
             <span className="text-ink">C#/.NET</span> and{" "}
             <span className="text-ink">TypeScript/Node.js</span> — architecting
             systems that stay maintainable long after they ship.
-          </p>
-
-          <p className="reveal mt-5 max-w-md text-sm leading-relaxed text-ink-faint">
-            {summary}
           </p>
 
           <div className="reveal mt-9 flex flex-wrap items-center gap-x-5 gap-y-3">
@@ -71,10 +53,16 @@ export function Hero() {
                 aria-hidden
               />
             </Link>
+            <Link
+              href="/about"
+              className="pressable inline-flex items-center gap-2 rounded-sm border border-rule px-5 py-3 text-sm transition-colors duration-150 hover:border-ink"
+            >
+              More about me
+            </Link>
             <a
               href={site.resumeUrl}
               download
-              className="pressable inline-flex items-center gap-2 rounded-sm border border-rule px-5 py-3 text-sm transition-colors duration-150 hover:border-ink"
+              className="pressable inline-flex items-center gap-2 rounded-sm px-1 py-3 text-sm text-ink-muted transition-colors duration-150 hover:text-ink"
             >
               <Download className="size-4" aria-hidden />
               Résumé
@@ -98,11 +86,9 @@ export function Hero() {
           </dl>
         </div>
 
-        {/* Collage: one plate, one overlapping inset. The overlap is what
+        {/* Collage: one plate, one overlapping inset — the overlap is what
             makes it read as paper laid on paper rather than a layout.
-            `grayscale` pulls the plate's purple out of the palette — the
-            design bans purple, and a hero focal point should not smuggle
-            it back in through an image. */}
+            `grayscale` keeps the plate's purple out of a palette that bans it. */}
         <div className="relative w-full pb-10 lg:pb-0">
           <div className="reveal relative aspect-square w-full overflow-hidden rounded-sm border border-rule bg-paper-raised sm:aspect-4/3 lg:aspect-square">
             <Image

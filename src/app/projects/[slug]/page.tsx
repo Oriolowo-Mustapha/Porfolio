@@ -4,8 +4,18 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 
-import { Label, Rule, SectionHeading } from "@/components/primitives";
+import { Label, Rule } from "@/components/primitives";
 import { getProject, projects } from "@/lib/projects";
+
+/** A section heading inside the brief: display-serif title with a hairline. */
+function SubHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-baseline gap-4">
+      <h2 className="font-display text-3xl">{children}</h2>
+      <Rule className="mb-1.5 flex-1" />
+    </div>
+  );
+}
 
 /** Pre-renders every project at build time. */
 export function generateStaticParams() {
@@ -122,13 +132,13 @@ export default async function ProjectPage({
 
         <div className="mt-14 grid gap-14 lg:grid-cols-[1.3fr_0.7fr] lg:gap-20">
           <div>
-            <SectionHeading label="The brief" />
+            <SubHeading>The brief</SubHeading>
             <p className="mt-8 max-w-[68ch] text-lg leading-relaxed text-ink-muted">
               {project.longDescription}
             </p>
 
             <div className="mt-16">
-              <SectionHeading label="Capabilities" />
+              <SubHeading>Capabilities</SubHeading>
               <dl className="mt-8 divide-y divide-rule border-y border-rule">
                 {project.modules.map((m, i) => (
                   <div

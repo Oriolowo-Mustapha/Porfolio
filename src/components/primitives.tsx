@@ -19,27 +19,6 @@ export function Label({
   return <p className={cn("label", className)}>{children}</p>;
 }
 
-/** Section heading: a small caps label, an optional numeral, and a hairline. */
-export function SectionHeading({
-  label,
-  numeral,
-  className,
-}: {
-  label: string;
-  numeral?: string;
-  className?: string;
-}) {
-  return (
-    <div className={cn("flex items-baseline gap-4", className)}>
-      {numeral ? (
-        <span className="label tabular-nums text-signal">{numeral}</span>
-      ) : null}
-      <h2 className="font-display text-3xl sm:text-4xl">{label}</h2>
-      <Rule className="mb-1.5 flex-1" />
-    </div>
-  );
-}
-
 /** A dotted leader between a label and a value — a table of contents, printed. */
 export function Leader({ children }: { children: React.ReactNode }) {
   return (

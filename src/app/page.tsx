@@ -1,6 +1,3 @@
-import { About } from "@/components/about";
-import { Contact } from "@/components/contact";
-import { Experience, Stack } from "@/components/about-sections";
 import { Hero } from "@/components/hero";
 import { ProjectIndex } from "@/components/project-index";
 import { site } from "@/lib/site";
@@ -15,11 +12,7 @@ const personLd = {
   description: site.description,
   email: `mailto:${site.email}`,
   url: "https://aphabase.dev",
-  sameAs: [
-    site.links.github,
-    site.links.linkedin,
-    site.links.twitter,
-  ],
+  sameAs: [site.links.github, site.links.linkedin, site.links.twitter],
   address: {
     "@type": "PostalAddress",
     addressCountry: "NG",
@@ -51,10 +44,6 @@ export default function Page() {
       />
       <Hero />
       <ProjectIndex limit={3} />
-      <Stack />
-      <Experience />
-      <About />
-      <Contact />
     </>
   );
 }
