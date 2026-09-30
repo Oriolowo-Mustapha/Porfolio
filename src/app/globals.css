@@ -52,6 +52,9 @@
   --color-rule-strong: var(--rule-strong);
   --color-signal: var(--signal);
   --color-signal-soft: var(--signal-soft);
+  --color-dock: var(--dock);
+  --color-dock-border: var(--dock-border);
+  --color-dock-active: var(--dock-active);
 
   /* 2px: paper does not have rounded corners. */
   --radius-sm: 2px;
@@ -91,6 +94,19 @@
   /* The one saturated color. Burnt ochre, used only for signal. */
   --signal: oklch(0.47 0.13 45);
   --signal-soft: oklch(0.93 0.03 55);
+
+  /* Navigation dock — the one object on the page allowed to float.
+     It is a physical card resting on the sheet, so it needs a real shadow
+     and full rounding where the rest of the design uses hairlines and 2px
+     radii. The shadow is tinted with ink rather than pure black so it reads
+     as warm ambient occlusion on warm paper, not a grey smudge. */
+  --dock: oklch(0.998 0.002 85);
+  --dock-border: oklch(0.91 0.006 80);
+  --dock-active: oklch(0.928 0.004 80);
+  --dock-shadow:
+    0 1px 2px oklch(0.205 0.008 70 / 0.04),
+    0 6px 16px oklch(0.205 0.008 70 / 0.06),
+    0 14px 32px oklch(0.205 0.008 70 / 0.05);
 
   --background: var(--paper);
   --foreground: var(--ink);
@@ -134,8 +150,10 @@
 
   html {
     @apply font-sans;
-    scroll-behavior: smooth;
-    /* Fixed header clearance so anchor jumps never hide a heading. */
+    /* Deliberately NOT `scroll-behavior: smooth`. Anchor scrolling is driven
+       by src/lib/scroll.ts instead, which guarantees the destination lands.
+       Native smooth scrolling was verified failing silently in a Chromium
+       run, and a nav link that does nothing is worse than one that jumps. */
     scroll-padding-top: 6rem;
     -webkit-text-size-adjust: 100%;
   }
@@ -240,9 +258,6 @@
       transition: opacity 200ms linear;
       transform: none;
       clip-path: none;
-    }
-    html {
-      scroll-behavior: auto;
     }
     *,
     *::before,

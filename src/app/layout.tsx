@@ -3,7 +3,7 @@ import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 
 import { Footer } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { BottomNavBar } from "@/components/ui/bottom-nav-bar";
+import { NavDock } from "@/components/ui/nav-dock";
 import { site } from "@/lib/site";
 
 import "./globals.css";
@@ -79,7 +79,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${inter.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground antialiased pb-14 md:pb-0">
+      <body className="min-h-full flex flex-col bg-background text-foreground antialiased pb-24 sm:pb-20">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-100 focus:rounded-sm focus:border focus:border-ink focus:bg-paper-raised focus:px-4 focus:py-2 focus:text-sm"
@@ -87,11 +87,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <SiteHeader />
-        {/* The bottom bar is `position: fixed`, so its DOM position does not
-            affect where it renders. It sits here, immediately after the
-            header, so keyboard users reach the primary navigation in the
-            first few tab stops instead of after the entire page. */}
-        <BottomNavBar />
+        {/* The dock is `position: fixed`, so its DOM position does not affect
+            where it renders. It sits here, immediately after the header, so
+            keyboard users reach primary navigation in the first few tab stops
+            instead of after the entire page. */}
+        <NavDock />
         <main id="main" className="flex-1">
           {children}
         </main>

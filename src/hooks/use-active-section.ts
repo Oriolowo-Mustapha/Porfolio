@@ -44,10 +44,9 @@ export function useActiveSection(ids: readonly string[]) {
       return Number.isFinite(pad) && pad > 0 ? pad : 80;
     };
 
-    let frame = 0;
+    let timer = 0;
 
     const measure = () => {
-      frame = 0;
       const HEADER = headerOffset();
 
       // Spatial order, not nav order.
@@ -78,9 +77,17 @@ export function useActiveSection(ids: readonly string[]) {
       setActive((prev) => (prev === current ? prev : current));
     };
 
+    // Measured directly on scroll rather than throttled through
+    // requestAnimationFrame. This reads a handful of cached layout rects, and
+    // the browser already coalesces scroll events to roughly one per frame, so
+    // the rAF gate bought nothing but a failure mode: where frames are scarce
+    // — background tabs, throttled or headless environments — the active item
+    // could stay stale for seconds because the measuring frame never came. The
+    // trailing timer covers the case where scrolling stops mid-throttle.
     const onScroll = () => {
-      if (frame) return;
-      frame = requestAnimationFrame(measure);
+      measure();
+      clearTimeout(timer);
+      timer = window.setTimeout(measure, 120);
     };
 
     measure();
@@ -88,7 +95,7 @@ export function useActiveSection(ids: readonly string[]) {
     window.addEventListener("resize", onScroll, { passive: true });
 
     return () => {
-      if (frame) cancelAnimationFrame(frame);
+      clearTimeout(timer);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };

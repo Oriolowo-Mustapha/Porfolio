@@ -60,23 +60,37 @@ the viewport, not the content.
 
 ## Navigation
 
-One nav, two viewports. Both render the same anchors and share one active
-state, so they can never disagree.
+**One floating dock, every viewport.** `src/components/ui/nav-dock.tsx` is the
+only navigation in the product — the header carries just the wordmark and the
+Résumé link.
 
-- **≥768px** — expanded inline row in the header. Active item carries a 1px
-  signal underline that scales in below the text.
-- **<768px** — `BottomNavBar`, fixed to the viewport bottom within thumb reach.
-  Square, hairline-bordered, paper-coloured. No hamburger sheet: that would be
-  a third presentation of the same five links.
-- **Active state is scroll-derived**, not click-derived. `useActiveSection`
+- A pill resting on the page: near-white surface, hairline border, warm
+  ink-tinted shadow, full rounding. Items are icon-only wells; the active one
+  grows to reveal its label on a filled pill.
+- The dock is the single deliberate exception to the 2px-radius, no-shadow
+  rules. It is a physical card lying on the sheet, so it needs to read as
+  lifted off the page. Everything else keeps the hairline treatment.
+- Position is `fixed` at the bottom, but the element sits directly after
+  `<header>` in the DOM so keyboard users reach it at tab stop 2.
+- `body` carries `pb-24 sm:pb-20` so the dock never covers the last line.
+- Active state is scroll-derived, never click-derived. `useActiveSection`
   sorts sections by document offset before matching, because nav order is
-  editorial while DOM order is spatial and the two disagree. It reads
-  `scroll-padding-top` from CSS for its header offset, so a tapped link
-  highlights the section it landed on.
-- The bottom bar sits directly after `<header>` in the DOM despite rendering
-  at the bottom, so keyboard users reach primary navigation within the first
-  few tab stops. `position: fixed` makes this free.
-- `body` carries `pb-14 md:pb-0` so the bar never covers the last line.
+  editorial while DOM order is spatial and the two disagree.
+- Tap targets are 44×44 minimum; verified 44px wide and 48px tall.
+
+### Scrolling
+
+Anchor scrolling is implemented in `src/lib/scroll.ts`, not left to
+`scroll-behavior: smooth`. Native smooth scrolling was verified failing
+silently — `scrollTo` reported no movement at all while the same call with
+`behavior: "instant"` worked — so navigation that depended on it appeared
+broken. The tween is rAF-driven with `easeOutExpo` and a hard deadline, which
+guarantees the destination lands even where frames are scarce.
+
+Motion budget: label reveal is a 220ms tween on the site's ease-out curve,
+not a spring. `width` is animated against measured pixel widths rather than
+`"auto"`, because Motion's own measurement pass races the collapse and left
+labels intermittently stuck at zero width.
 
 ## Layout
 
