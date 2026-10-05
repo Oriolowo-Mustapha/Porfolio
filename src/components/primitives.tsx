@@ -23,10 +23,13 @@ export function Label({
 export function Leader({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-baseline gap-2">
-      <span className="shrink-0">{children}</span>
+      {/* `min-w-0` lets long capability text wrap instead of overflowing into
+          the next grid column. Without it, flexbox keeps the content at its
+          intrinsic width and the text escapes its track. */}
+      <span className="min-w-0">{children}</span>
       <span
         aria-hidden
-        className="h-px flex-1 translate-y-[-3px] bg-[repeating-linear-gradient(to_right,var(--rule-strong)_0_2px,transparent_2px_5px)]"
+        className="h-px min-w-8 flex-1 translate-y-[-3px] bg-[repeating-linear-gradient(to_right,var(--rule-strong)_0_2px,transparent_2px_5px)]"
       />
     </div>
   );

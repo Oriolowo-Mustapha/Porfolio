@@ -2,12 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, useReducedMotion } from "framer-motion";
 import {
   House,
   User,
   Briefcase,
-  Blocks,
   MessageCircle,
   FileText,
   type LucideIcon,
@@ -16,30 +14,28 @@ import {
 import { nav, site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-/**
- * Width of an expanded label on the collapsed (mobile) pill. The labels are
- * "Home", "About", "Roles", "Skills", "Say hello", "Résumé" — 72px holds the
- * longest of those at 13px without clipping, and nothing else is used in the
- * nav, so the number can be a constant rather than a measurement pass.
- */
-const MOBILE_LABEL_WIDTH = 72;
-
 const icons: Record<string, LucideIcon> = {
   home: House,
   about: User,
   roles: Briefcase,
-  skills: Blocks,
   contact: MessageCircle,
   resume: FileText,
 };
 
+/**
+ * Which labels the pill shows.
+ *
+ * - `"icons"` — mobile. Nothing but icons. At the bottom of the screen the pill
+ *   has to stay narrow and out of the way, and the labels used to cost 116px of
+ *   the 314px pill for a link the thumb was already on top of.
+ * - `"labels"` — desktop, where the header has the room and the words cost
+ *   nothing.
+ */
+type NavVariant = "icons" | "labels";
+
 type BottomNavBarProps = {
   className?: string;
-  /**
-   * Show every label, not just the active one. Used above the mobile
-   * breakpoint, where there is room for the full set.
-   */
-  expanded?: boolean;
+  variant?: NavVariant;
   /** Pin to the bottom of the viewport. Used on mobile. */
   stickyBottom?: boolean;
 };
@@ -47,16 +43,24 @@ type BottomNavBarProps = {
 /**
  * One navigation pill, two presentations.
  *
- * Mobile: a fixed pill at the bottom of the viewport, inactive items collapsed
- * to 44px icon wells and the active one springing open to reveal its label —
- * thumb-reachable, which is the entire point of putting it at the bottom.
+ * Mobile: a fixed pill at the bottom of the viewport, icons only — the narrowest
+ * thing that is still thumb-reachable, which is the entire point of putting it
+ * at the bottom.
  *
- * Everything wider: the same pill expanded, every label showing, centred in
- * the header. `expanded` deliberately does not animate the label width. There is
- * nothing to animate — the set of labels never changes — and animating toward
- * `"auto"` is what previously left labels stuck at zero width on this project.
- * Static auto width also means no label can ever be clipped by a fixed pixel
- * guess.
+ * Everything wider: the same pill in the header with every label showing,
+ * centred on the viewport.
+ *
+ * Either way the label is the accessible name, so it moves rather than
+ * disappears: `"icons"` gives the link an `aria-label` and a `title` tooltip,
+ * `"labels"` uses the rendered text. The word is never in the DOM twice, so a
+ * screen reader announces "Home, link", not "Home Home".
+ *
+ * This is why the active item needs a real tonal step rather than leaning on
+ * "the one with the word". On mobile nothing is written next to the icons, so
+ * active state is carried by `aria-current="page"` plus the active icon in
+ * `--ink` against `--ink-muted` on the others (2.78:1 between them), with
+ * `--dock-active` filling behind it at 1.56:1 against the dock. Neither step
+ * reaches 3:1 on its own — see the note in DESIGN.md before tightening either.
  *
  * Colours come from the paper tokens rather than the generic `bg-card` /
  * `bg-primary/10` defaults, so the pill reads as warm paper with an ochre-tinted
@@ -68,11 +72,11 @@ type BottomNavBarProps = {
  */
 export function BottomNavBar({
   className,
-  expanded = false,
+  variant = "icons",
   stickyBottom = false,
 }: BottomNavBarProps) {
   const pathname = usePathname();
-  const reduce = useReducedMotion();
+  const showLabels = variant === "labels";
 
   return (
     <nav
@@ -95,8 +99,7 @@ export function BottomNavBar({
             href={item.href}
             label={item.label}
             isActive={pathname === item.href}
-            expanded={expanded}
-            reduce={!!reduce}
+            showLabels={showLabels}
           >
             <Icon size={20} strokeWidth={1.8} aria-hidden className="shrink-0" />
           </NavItem>
@@ -106,7 +109,13 @@ export function BottomNavBar({
       {/* Résumé is a file, not a route. It opens in the browser rather than
           downloading — the visitor may want to read it or hit ctrl-F in it —
           and because it is not a route it never reads as the current page. */}
-      <NavItem href={site.resumeUrl} label="Résumé" isActive={false} expanded={expanded} reduce={!!reduce} external>
+      <NavItem
+        href={site.resumeUrl}
+        label="Résumé"
+        isActive={false}
+        showLabels={showLabels}
+        external
+      >
         <FileText size={20} strokeWidth={1.8} aria-hidden className="shrink-0" />
       </NavItem>
     </nav>
@@ -117,87 +126,58 @@ function NavItem({
   href,
   label,
   isActive,
-  expanded,
-  reduce,
+  showLabels,
   external,
   children,
 }: {
   href: string;
   label: string;
   isActive: boolean;
-  expanded: boolean;
-  reduce: boolean;
+  showLabels: boolean;
   external?: boolean;
   children: React.ReactNode;
 }) {
   const className = cn(
     "pressable flex h-11 items-center rounded-full px-3",
     "transition-colors duration-200",
-    isActive
-      ? "bg-dock-active text-ink"
-      : "text-ink-muted hover:text-ink",
+    isActive ? "bg-dock-active text-ink" : "text-ink-muted hover:text-ink",
   );
 
   const inner = (
     <>
       {children}
-      <NavLabel label={label} open={isActive} expanded={expanded} reduce={reduce} />
+      {showLabels && (
+        <span className="ml-2 whitespace-nowrap text-sm font-medium leading-none">
+          {label}
+        </span>
+      )}
     </>
   );
 
+  // With no rendered text the link would be unnamed, so the label moves onto the
+  // anchor. `title` is the hover tooltip the visible text used to provide for
+  // free; it never becomes the accessible name while `aria-label` is present,
+  // so the two cannot fight.
+  const naming = showLabels
+    ? {}
+    : { "aria-label": label, title: label };
+
   return external ? (
-    // Plain anchor, not <Link>: /resume.pdf is a file, and client-side routing
+    // Plain anchor, not <Link>: the résumé PDF is a file, and client-side routing
     // to it would try to render the response as a page instead of handing it to
     // the browser's PDF viewer.
-    <a href={href} className={className}>
+    <a href={href} className={className} {...naming}>
       {inner}
     </a>
   ) : (
-    <Link href={href} aria-current={isActive ? "page" : undefined} className={className}>
+    <Link
+      href={href}
+      aria-current={isActive ? "page" : undefined}
+      className={className}
+      {...naming}
+    >
       {inner}
     </Link>
-  );
-}
-
-function NavLabel({
-  label,
-  open,
-  expanded,
-  reduce,
-}: {
-  label: string;
-  open: boolean;
-  expanded: boolean;
-  reduce: boolean;
-}) {
-  // Expanded pill: always visible, natural width, nothing to animate. No
-  // aria-hidden — a screen reader should hear the link name at every viewport.
-  if (expanded) {
-    return (
-      <span className="ml-2 whitespace-nowrap text-sm font-medium leading-none">
-        {label}
-      </span>
-    );
-  }
-
-  return (
-    <motion.span
-      initial={false}
-      animate={{ width: open ? MOBILE_LABEL_WIDTH : 0, opacity: open ? 1 : 0 }}
-      transition={
-        reduce
-          ? { duration: 0 }
-          : {
-              width: { type: "spring", stiffness: 350, damping: 32 },
-              opacity: { duration: 0.19 },
-            }
-      }
-      className="overflow-hidden"
-    >
-      <span className="block whitespace-nowrap text-[13px] font-medium leading-none">
-        {label}
-      </span>
-    </motion.span>
   );
 }
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Experience } from "@/components/about-sections";
 import { PageBody, PageHero } from "@/components/page-hero";
+import { ProjectList } from "@/components/project-index";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -22,10 +23,13 @@ export default function RolesPage() {
         numeral="02"
         eyebrow="Roles"
         title="Roles held"
-        lede="Backend engineering across contract and internship work — REST APIs, background processing, and clean architecture."
+        lede="Backend engineering across contract and internship work, and the projects that came out of them."
       />
       <PageBody>
         <Experience />
+        <div className="mt-16 border-t border-rule pt-10">
+          <ProjectList />
+        </div>
       </PageBody>
     </>
   );

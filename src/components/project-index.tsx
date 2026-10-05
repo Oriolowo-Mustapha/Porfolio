@@ -3,13 +3,11 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { Label } from "@/components/primitives";
-import { projects, type Project } from "@/lib/projects";
+import { getProject, projects, type Project, type ProjectSlug } from "@/lib/projects";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-export function ProjectIndex({ limit }: { limit?: number }) {
-  const list = (limit ? projects.slice(0, limit) : projects) as readonly Project[];
-
+export function ProjectIndex({ slugs }: { slugs?: readonly ProjectSlug[] }) {
   return (
     <section id="work" aria-labelledby="work-heading" className="border-b border-rule">
       <div className="mx-auto max-w-[1200px] px-5 py-16 sm:px-8 sm:py-20">
@@ -26,28 +24,87 @@ export function ProjectIndex({ limit }: { limit?: number }) {
           cooperative fintech, and organisational tooling.
         </p>
 
-        <ol className="mt-14 border-t border-rule">
-          {list.map((p, i) => (
-            <li key={p.slug}>
-              <ProjectRow project={p} index={i + 1} />
-            </li>
-          ))}
-        </ol>
+        <ProjectRows slugs={slugs} className="mt-14 border-t border-rule" />
 
-        {limit ? (
-          <Link
-            href="/projects"
-            className="pressable group mt-10 inline-flex items-center gap-2 text-sm"
-          >
-            <span className="link-underline">All {projects.length} projects</span>
-            <ArrowUpRight
-              className="size-4 transition-transform duration-200 ease-out-expo group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              aria-hidden
-            />
-          </Link>
-        ) : null}
+        {slugs ? <AllProjectsLink className="mt-10" /> : null}
       </div>
     </section>
+  );
+}
+
+/**
+ * The project rows as a page body — a `label` heading and the list, with no
+ * band chrome of its own.
+ *
+ * Split out of `ProjectIndex` because the two callers disagree about framing.
+ * The home page wants a full band with a folio numeral and its own container;
+ * `/roles` already sits inside a `PageHero` and a `PageBody`, so a nested
+ * `max-w-[1200px]` band would double the gutters and carry a second "05" numeral
+ * from a different sequence. The rows are identical either way, so only the
+ * framing moved.
+ *
+ * Pass no `limit` to list everything and omit the link — there is nothing left
+ * to link to. Pass a `limit` where the rest of the index is one click away.
+ */
+export function ProjectList({
+  limit,
+  heading = "Selected work",
+}: {
+  limit?: number;
+  heading?: string;
+}) {
+  return (
+    <>
+      <h2 className="label">{heading}</h2>
+      <ProjectRows limit={limit} className="mt-8 border-t border-rule" />
+      {limit ? <AllProjectsLink className="mt-10" /> : null}
+    </>
+  );
+}
+
+function ProjectRows({
+  limit,
+  slugs,
+  className,
+}: {
+  limit?: number;
+  slugs?: readonly ProjectSlug[];
+  className?: string;
+}) {
+  const list = (
+    slugs
+      ? slugs.flatMap((slug) => {
+          const project = getProject(slug);
+          return project ? [project] : [];
+        })
+      : limit
+        ? projects.slice(0, limit)
+        : projects
+  ) as readonly Project[];
+
+  return (
+    <ol className={className}>
+      {list.map((p, i) => (
+        <li key={p.slug}>
+          <ProjectRow project={p} index={i + 1} />
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+function AllProjectsLink({ className }: { className?: string }) {
+  return (
+    <Link
+      href="/projects"
+      className={`pressable group inline-flex items-center gap-2 text-sm ${className ?? ""}`}
+    >
+      <span className="link-underline">All {projects.length} projects</span>
+      <ArrowUpRight
+        className="size-4 transition-transform duration-200 ease-out-expo group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        aria-hidden
+      />
+    </Link>
   );
 }
 
@@ -115,5 +172,3 @@ function ProjectRow({
     </Link>
   );
 }
-
-export { Label as ProjectLabel };

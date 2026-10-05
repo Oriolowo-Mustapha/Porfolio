@@ -47,7 +47,7 @@ export function RolesRotator() {
         <span className="sr-only">
           {roleTitles.join(", ")}.
         </span>
-        <p aria-hidden className="font-display mt-6 text-2xl leading-tight sm:text-3xl">
+        <p aria-hidden className="font-display mt-4 text-2xl leading-tight sm:text-3xl">
           {roleTitles.map((r) => (
             <span key={r} className="block">
               {r}
@@ -63,7 +63,7 @@ export function RolesRotator() {
       <span className="sr-only">{roleTitles.join(", ")}.</span>
       <p
         aria-hidden
-        className="font-display relative mt-6 h-[1.35em] overflow-hidden text-2xl leading-tight sm:text-3xl"
+        className="font-display relative mt-4 h-[1.35em] w-full overflow-hidden text-2xl leading-tight sm:text-3xl"
       >
         {roleTitles.map((role, i) => (
           <span

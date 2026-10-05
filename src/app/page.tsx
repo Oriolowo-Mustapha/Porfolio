@@ -1,6 +1,7 @@
 import { Hero } from "@/components/hero";
 import { ProjectIndex } from "@/components/project-index";
 import { RolesSection } from "@/components/about-sections";
+import { featuredSlugs } from "@/lib/projects";
 import { site } from "@/lib/site";
 
 /** Person schema so search engines and AI crawlers get a typed identity. */
@@ -45,7 +46,7 @@ export default function Page() {
       />
       <Hero />
       <RolesSection />
-      <ProjectIndex limit={3} />
+      <ProjectIndex slugs={featuredSlugs} />
     </>
   );
 }

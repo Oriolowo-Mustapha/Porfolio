@@ -42,3 +42,7 @@ next-env.d.ts
 
 # Agoya local agent memory
 .agoya/
+
+# AI-generated local helpers/components
+/scripts/generate-brand-icons.mjs
+/src/components/brand-icon.tsx

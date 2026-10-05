@@ -10,7 +10,7 @@ export const site = {
   availability: "Mon — Fri",
   available: true,
   yearsExperience: 3,
-  resumeUrl: "/resume.pdf",
+  resumeUrl: "/Oriolowo_Mustapha_General_Software_Engineer_Resume.pdf",
   whatsapp: "https://wa.me/2347031602720",
   university:
     "Federal University of Agriculture, Abeokuta (FUNAAB)",
@@ -32,7 +32,6 @@ export const nav = [
   { label: "Home", href: "/", icon: "home" },
   { label: "About", href: "/about", icon: "about" },
   { label: "Roles", href: "/roles", icon: "roles" },
-  { label: "Skills", href: "/skills", icon: "skills" },
   { label: "Say hello", href: "/say-hello", icon: "contact" },
 ] as const;
 
@@ -46,20 +45,52 @@ export const roleTitles = [
 
 export const bio = [
   {
-    text: "Hello! I'm Mustapha, a Software Engineer dedicated to architecting robust, scalable systems that solve real-world challenges.",
-    emphasis: ["Mustapha", "Software Engineer"],
+    text: "My name is Oriolowo Mustapha. I am a Software Engineer from Nigeria, focused on building secure, scalable systems that stay reliable, maintainable, and useful under real-world constraints.",
+    emphasis: ["Oriolowo Mustapha", "Software Engineer", "Nigeria"],
+    signal: ["secure, scalable systems"],
   },
   {
-    text: "With three years of industry experience, I specialise in building high-performance backends using C#/.NET, Node.js, and TypeScript. My approach is rooted in Clean Architecture and CQRS, ensuring the systems I build aren't just functional, but maintainable and future-proof.",
-    emphasis: ["C#/.NET", "Node.js", "TypeScript", "Clean Architecture", "CQRS"],
-  },
-  {
-    text: "I am currently pursuing my degree in Computer Science at the Federal University of Agriculture, Abeokuta (FUNAAB) — a path that provides the theoretical depth to match my practical, hands-on expertise. I am particularly passionate about the intersection of software and AI integration, constantly seeking ways to leverage emerging tech to optimise complex workflows.",
+    text: "I work across backend architecture, API design, data modeling, background-job workflows, and product-facing interfaces. My core stack includes C#, ASP.NET Core, TypeScript, Node.js, Express, React, PostgreSQL, MySQL, MongoDB, Redis, and queue-based systems like Hangfire and BullMQ. I lean on Clean Architecture, CQRS, and MediatR to keep codebases easy to reason about and easy to change.",
     emphasis: [
-      "Computer Science",
-      "Federal University of Agriculture, Abeokuta (FUNAAB)",
-      "AI integration",
+      "backend architecture",
+      "API design",
+      "data modeling",
+      "background-job workflows",
+      "product-facing interfaces",
+      "C#",
+      "ASP.NET Core",
+      "TypeScript",
+      "Node.js",
+      "Express",
+      "React",
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB",
+      "Redis",
+      "queue-based systems",
+      "Hangfire",
+      "BullMQ",
+      "Clean Architecture",
+      "CQRS",
+      "MediatR",
     ],
+    signal: ["easy to reason about", "easy to change"],
+  },
+  {
+    text: "I have shipped systems across fintech, agritech, edtech, and AI tooling, from cooperative savings and escrow payments to multi-LLM diagnostics, fact-checking, and skill-assessment platforms. I care about clear engineering decisions, dependable execution, and building software that can grow without becoming difficult to change.",
+    emphasis: [
+      "fintech",
+      "agritech",
+      "edtech",
+      "AI tooling",
+      "cooperative savings",
+      "escrow payments",
+      "multi-LLM diagnostics",
+      "fact-checking",
+      "skill-assessment platforms",
+      "clear engineering decisions",
+    ],
+    signal: ["dependable execution"],
   },
 ] as const;
 
@@ -109,41 +140,93 @@ export const skills = [
   {
     label: "Languages",
     items: [
-      { name: "TypeScript", icon: "typescript" },
-      { name: "C#", icon: "csharp" },
-      { name: "Python", icon: "python" },
-      { name: "SQL", icon: "database" },
-      { name: "JavaScript", icon: "javascript" },
-    ],
-  },
-  {
-    label: "Frontend",
-    items: [
-      { name: "React", icon: "react" },
-      { name: "Next.js", icon: "nextjs" },
-      { name: "Tailwind CSS", icon: "tailwind" },
-      { name: "TanStack Query", icon: "query" },
-      { name: "Zustand", icon: "box" },
+      "C#",
+      "TypeScript",
+      "JavaScript (ES6+)",
+      "SQL",
+      "Python",
+      "HTML5",
+      "CSS3",
     ],
   },
   {
     label: "Backend",
     items: [
-      { name: "Node.js", icon: "nodejs" },
-      { name: "ASP.NET Core", icon: "dotnet" },
-      { name: "Express", icon: "express" },
-      { name: "EF Core", icon: "network" },
+      "ASP.NET Core Web API (.NET 8 / .NET 10)",
+      "Node.js and Express.js (v5)",
+      "Entity Framework Core (code-first migrations) and Mongoose",
+      "MediatR, FluentValidation, AutoMapper",
+      "Passport.js and Multer",
+      "REST API design, documented with Swagger/OpenAPI, NSwag, and Scalar",
+    ],
+  },
+  {
+    label: "Architecture and patterns",
+    items: [
+      "Clean (Onion) Architecture, CQRS, Domain-Driven Design",
+      "Repository and Unit of Work",
+      "Transactional Outbox, idempotent transactions",
+      "Multi-tenant design, role-based access control",
+      "Webhook design",
+      "Background job processing (Hangfire, BullMQ, MassTransit, hosted workers)",
+      "LLM fallback routing, exponential backoff, circuit breakers",
     ],
   },
   {
     label: "Databases",
     items: [
-      { name: "PostgreSQL", icon: "postgresql" },
-      { name: "MongoDB", icon: "mongodb" },
-      { name: "MySQL", icon: "mysql" },
+      "PostgreSQL, MongoDB, Redis, SQL Server, MySQL",
+      "Schema design, stored procedures, LINQ",
+    ],
+  },
+  {
+    label: "Frontend",
+    items: [
+      "React 19, Vite, React Router v7",
+      "TanStack Query, Zustand",
+      "Tailwind CSS v4, Framer Motion, Radix UI, Lucide",
+      "React Hook Form with Zod, Axios interceptors",
+      "Responsive design and gamified, neumorphic UI",
+    ],
+  },
+  {
+    label: "Payments and fintech",
+    items: [
+      "Paystack, Nomba, ALATPay, Monnify",
+      "HMAC webhook verification, virtual accounts, payouts, refunds, reversals",
+      "Ledger accounting, reconciliation, escrow flows, BVN/KYC",
+    ],
+  },
+  {
+    label: "AI and LLM engineering",
+    items: [
+      "OpenAI (GPT-4o, GPT-4o-mini), Google Gemini, Groq, OpenRouter",
+      "Multimodal and vision pipelines",
+      "Structured outputs with Zod and JSON repair",
+      "Prompt design and AI-generated assessments",
+      "SerpAPI and the YouTube Data API",
+    ],
+  },
+  {
+    label: "Code execution",
+    items: [
+      "Judge0 sandbox, language-specific test harnesses for 6 languages",
+    ],
+  },
+  {
+    label: "Authentication and security",
+    items: [
+      "JWT with refresh-token rotation, Google OAuth 2.0, BCrypt, PBKDF2, HMAC signature verification, EXIF GPS/timestamp verification",
+    ],
+  },
+  {
+    label: "Cloud, DevOps and testing",
+    items: [
+      "Azure (App Service, Virtual Machines, Application Insights), Railway, Vercel",
+      "Docker (multi-stage builds)",
+      "Git and GitHub Actions (CI, CodeQL, Dependabot, branch protection)",
+      "Serilog and Winston logging",
+      "xUnit (unit, domain, integration), Postman",
     ],
   },
 ] as const;
-
-export type SkillIcon =
-  (typeof skills)[number]["items"][number]["icon"];

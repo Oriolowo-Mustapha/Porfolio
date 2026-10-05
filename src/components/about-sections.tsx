@@ -1,56 +1,46 @@
 import { Label, Leader } from "@/components/primitives";
-import { experience, skills as skillGroups, site } from "@/lib/site";
+import { experience, skills as skillGroups } from "@/lib/site";
 
 /**
- * Maps a skill name to a monogram. Brand marks are out of scope for a text
- * glyph set; a neutral monogram per language is honest and consistent, where
- * borrowing third-party brand SVGs would reintroduce the CDN dependency this
- * project removed.
+ * Technical-skills body. Rendered inside `/about`, below the biography.
+ *
+ * Carries its own top rule because `PageBody` stacks its children flush — this
+ * is always the second section on the page, so the divider is not a prop that
+ * could be forgotten at the call site.
+ *
+ * The stack belongs with the biography rather than the roles: these are the tools
+ * this person works with, which is a fact about them, not about a job they
+ * happened to hold.
+ *
+ * The supplied taxonomy mixes products, language versions, architectural
+ * patterns, providers, and operational practices. It is therefore rendered as
+ * capability prose with one restrained ochre marker per line, rather than
+ * forcing a brand mark onto concepts that do not have brands.
  */
-const glyphs: Record<string, string> = {
-  TypeScript: "TS",
-  "C#": "#",
-  Python: "Py",
-  SQL: "DB",
-  JavaScript: "JS",
-  React: "Re",
-  "Next.js": "Nx",
-  "Tailwind CSS": "Tw",
-  "TanStack Query": "Q",
-  Zustand: "Z",
-  "Node.js": "No",
-  "ASP.NET Core": ".N",
-  Express: "Ex",
-  "EF Core": "EF",
-  PostgreSQL: "Pg",
-  MongoDB: "Mg",
-  MySQL: "My",
-};
-
-/** Skills body. Rendered by /skills, which owns the page chrome. */
 export function Stack() {
   return (
-    <section aria-labelledby="stack-heading">
-      <h2 id="stack-heading" className="label">
-        The stack
+    <section
+      aria-labelledby="technical-skills-heading"
+      className="mt-16 border-t border-rule pt-10"
+    >
+      <h2 id="technical-skills-heading" className="label">
+        Technical skills
       </h2>
 
       <div className="mt-8 grid gap-x-12 gap-y-10 sm:grid-cols-2">
         {skillGroups.map((group) => (
-          <div key={group.label}>
+          <div key={group.label} className="min-w-0">
             <h3 className="label">{group.label}</h3>
             <ul className="mt-4 space-y-2.5">
               {group.items.map((item) => (
-                <li key={item.name}>
+                <li key={item} className="min-w-0">
                   <Leader>
-                    <span className="flex items-center gap-2.5">
+                    <span className="flex min-w-0 flex-1 items-start gap-2.5">
                       <span
                         aria-hidden
-                        className="inline-flex size-6 shrink-0 items-center justify-center rounded-sm border border-rule font-mono text-[9px] tracking-tight text-ink-muted"
-                      >
-                        {glyphs[item.name] ?? item.name.slice(0, 2)}
-                      </span>
-                      <span className="text-sm text-ink">{item.name}</span>
+                        className="mt-2 size-1.5 shrink-0 rounded-full bg-signal"
+                      />
+                      <span className="min-w-0 flex-1 break-words text-sm text-ink">{item}</span>
                     </span>
                   </Leader>
                 </li>
@@ -58,15 +48,6 @@ export function Stack() {
             </ul>
           </div>
         ))}
-      </div>
-
-      <div className="mt-14 border-t border-rule pt-8">
-        <h3 className="label">Currently</h3>
-        <p className="mt-3 max-w-xl text-ink-muted">
-          Pursuing a degree in {site.degree} at {site.university}, alongside
-          production work. Particularly interested in the intersection of
-          software and AI integration.
-        </p>
       </div>
     </section>
   );

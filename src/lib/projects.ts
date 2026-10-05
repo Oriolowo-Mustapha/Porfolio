@@ -26,25 +26,29 @@ export const projects = [
     category: "AI · Agriculture",
     image: "/agroguardian.webp",
     description:
-      "Sophisticated AI-powered analytics engine for climate-smart agriculture and regenerative farming. Built with a TypeScript Node.js backend and a React/Vite frontend, it delivers AI-driven insights, weather risk analytics, and carbon-credit tracking to help farmers reduce risk and optimise decisions.",
+      "Enterprise-grade climate-smart agriculture platform with multi-modal AI diagnostics, hyper-local climate-risk modeling, autonomous carbon MRV, and bankable Resilience Scores.",
     longDescription:
-      "AgroGuardian AI is an end-to-end solution for modern agriculture. The TypeScript backend orchestrates a multi-model AI engine (GPT + Gemini) with self-healing fallbacks and Zod-validated structured outputs. The React frontend provides a seamless 7-day weather risk analysis experience, featuring manual sync triggers, success/error notifications, and context-aware risk badges for drought, flood, and pests based on soil and irrigation data.",
+      "AgroGuardian AI is an enterprise-grade AgriTech backend platform engineered to bridge smallholder farming, multi-modal veterinary and agronomy intelligence, and the voluntary carbon-credit economy. It provides automated farm operations with instant visual diagnostics, climate-risk modeling conditioned on soil and irrigation, autonomous carbon measurement, reporting, and verification through EXIF-geofenced photographic proof, and a dynamic Resilience Score from 0–100. The backend uses Node.js, TypeScript, Express 5, MongoDB, Redis, and BullMQ.",
     stack: [
       "TypeScript",
       "Node.js",
-      "React",
-      "Express",
+      "Express 5",
       "MongoDB",
+      "Mongoose",
       "Redis",
       "BullMQ",
-      "Gemini AI",
-      "OpenAI",
-      "Prisma",
-      "React Query",
-      "Zustand",
+      "Gemini 1.5 Flash",
+      "GPT-4o",
       "Zod",
-      "Cloudinary",
       "JWT",
+      "Passport.js",
+      "Google OAuth 2.0",
+      "BCrypt.js",
+      "RBAC",
+      "Cloudinary",
+      "Multer",
+      "Winston",
+      "React",
       "Vite",
       "Tailwind CSS",
     ],
@@ -54,24 +58,29 @@ export const projects = [
       "https://github.com/Oriolowo-Mustapha/Agroguardian---Frontend",
     modules: [
       {
-        title: "Carbon Credit & AI Verification",
+        title: "Carbon Credit & MRV Engine",
         detail:
-          "Calculates tons CO2e using dynamic formulas (Area × CarbonFactor × CropMultiplier). Uses AI vision verification to validate sustainable practice evidence photos.",
+          "Quantifies sequestration from farm area, regional climate coefficients, soil texture, crop multipliers, and practice duration. Validates additionality and photographic proof with EXIF GPS and timestamp checks, while scheduled BullMQ workers accrue verified balances.",
       },
       {
-        title: "Enhanced Climate Risk System",
+        title: "Soil-Aware Climate Oracle",
         detail:
-          "Produces context-aware risk assessments for Drought, Flood, and Heat. Generates “precision windows” for planting, harvesting, and spraying based on rain/wind constraints.",
+          "Computes drought, flood, heat, pest, and disease exposure using soil drainage and irrigation context. Generates hourly planting, spraying, and harvesting viability flags from wind, precipitation, and soil-temperature thresholds.",
       },
       {
-        title: "AI-Vet & Livestock Health",
+        title: "AI Veterinary & Plant Clinic",
         detail:
-          "Vision-based diagnosis for cattle and poultry, providing species-specific biosecurity guidance, vaccination schedules, and automated breeding tracking.",
+          "Analyzes crop and livestock images to assess disease severity and generate structured remediation protocols. Uses species-specific diagnostic routing, quarantine guidance, vaccination planning, and contextual follow-up threads.",
       },
       {
-        title: "Multi-model AI & Resilience",
+        title: "Resilience Scoring Engine",
         detail:
-          "Integrates multiple LLMs with self-healing fallbacks and JSON repair. Computes a 0–100 Resilience Score representing farm adaptation and diversity.",
+          "Produces a 0–100 Resilience Score from farm management, climate adaptation, and biodiversity measures. The score turns regenerative practices into bankable data for micro-lenders and crop insurers.",
+      },
+      {
+        title: "Livestock Lifecycle OS",
+        detail:
+          "Provisions breeding milestones, nutrition checks, birthing preparation, and postpartum tracking. Cron-driven BullMQ workers schedule feeding reminders, deworming cycles, and vaccinations.",
       },
     ],
   },
@@ -81,16 +90,26 @@ export const projects = [
     category: "AI · Verification",
     image: "/verilens.webp",
     description:
-      "VeriLens is an AI-powered fake news detection and verification platform that helps users evaluate news content (text and optionally images) and classify it as Fake, Real, or Suspicious. Built as a TypeScript Node.js/Express + MongoDB backend, paired with a lightweight web frontend.",
+      "Production-grade multimodal fact-checking engine that cross-examines claims and images against live reporting, then returns an explainable Real, Fake, or Suspicious verdict with a 0–100 credibility score.",
     longDescription:
-      "VeriLens focuses on “trustworthy information” by providing AI-driven news verification, image claim analysis, and credibility scoring (0–100) to indicate certainty. The platform offers a real-time verification flow, user accounts with analysis history, and a dedicated admin interface for user management and role promotion.",
+      "VeriLens is an AI-driven fact-checking engine that treats verification as active cross-examination rather than black-box classification. It retrieves contemporaneous reporting, checks contextual consistency between text claims and accompanying imagery, and generates transparent rationales backed by primary sources. The TypeScript and Express backend combines GPT-4o-mini, Gemini 2.5 Flash, SerpAPI news retrieval, Cloudinary media handling, and deterministic scoring. JWT authentication, refresh-token rotation, and role-based access protect user histories and administrative controls.",
     stack: [
       "TypeScript",
       "Node.js",
-      "Express",
+      "Express 5",
       "MongoDB",
-      "Gemini AI",
-      "HTML",
+      "Mongoose",
+      "GPT-4o-mini",
+      "Gemini 2.5 Flash",
+      "SerpAPI",
+      "Cloudinary",
+      "Multer",
+      "Brevo",
+      "JWT",
+      "Bcrypt",
+      "RBAC",
+      "Winston",
+      "HTML5",
       "Tailwind CSS",
       "Vanilla JavaScript",
     ],
@@ -100,24 +119,39 @@ export const projects = [
       "https://github.com/Oriolowo-Mustapha/VeriLens-Frontend",
     modules: [
       {
-        title: "AI News & Image Verification",
+        title: "Multimodal Claim Verification",
         detail:
-          "Analyses news text and optional image uploads to provide a verdict (FAKE | REAL | SUSPICIOUS) with detailed reasoning.",
+          "Accepts claim text and optional JPG, PNG, or WebP evidence, then returns a Real, Fake, or Suspicious verdict with a 0–100 credibility score and an explainable journalistic breakdown.",
       },
       {
-        title: "Credibility Scoring",
+        title: "Live Journalism Cross-Referencing",
         detail:
-          "Returns a confidence score from 0–100 based on AI analysis to help users gauge information certainty.",
+          "Extracts high-signal keywords, queries SerpAPI Google News, and evaluates publisher identity, timestamps, consensus, and contradictions across contemporaneous reporting.",
       },
       {
-        title: "User Accounts & History",
+        title: "Multi-LLM Fallback Architecture",
         detail:
-          "Secure authentication system allowing users to track and review their past analysis records.",
+          "Routes requests first to GPT-4o-mini and falls back to Gemini 2.5 Flash during rate limits or network failures. Strict JSON-schema validation prevents AI formatting drift.",
       },
       {
-        title: "Admin Management",
+        title: "Forensic Image Alignment",
         detail:
-          "Centralised dashboard for administrators to oversee platform users and manage account permissions.",
+          "Streams uploads through Cloudinary and assesses whether imagery genuinely depicts the claimed event, including temporal inconsistencies and synthetic-generation artifacts.",
+      },
+      {
+        title: "Deterministic Scoring",
+        detail:
+          "Combines text confidence and visual alignment with a 60/40 weighted formula. Scores below 30 classify as Fake, 30–64 as Suspicious, and 65 or higher as Real, with overrides for verified debunks.",
+      },
+      {
+        title: "Enterprise Security",
+        detail:
+          "Uses short-lived access tokens, seven-day refresh-token rotation, Bcrypt hashing, email verification, password reset, and role-based access control.",
+      },
+      {
+        title: "History and Administration",
+        detail:
+          "Persists queries, model outputs, sources, breakdowns, confidence scores, and timestamps. Role-checked administrative routes support account auditing and permission promotion.",
       },
     ],
   },
@@ -127,49 +161,86 @@ export const projects = [
     category: "Fintech · Full-stack",
     image: "/Ajocore.webp",
     description:
-      "A production-grade cooperative savings platform that digitises traditional Nigerian Ajo/Esusu. It automates contributions, rotational payouts, and group lifecycle management with real-time payment processing via Nomba virtual accounts and webhooks.",
+      "Production-grade fintech backend that digitises Ajo, Esusu, and Adashe cooperative savings with automated virtual accounts, real-time webhook contribution tracking, and scheduled payout disbursement.",
     longDescription:
-      "AjoCore replaces the informal, trust-based Ajo/Esusu savings model with a digital-first system. Cooperative Admins create savings groups, configure saving cycles (Personal, ROSCA, or ASCA schemes), and monitor contribution/payout ledgers. Traders discover and join groups, contribute via auto-generated virtual bank accounts, and receive automated rotational payouts. System Admins oversee platform-wide metrics and the Nomba wallet. Every naira is tracked through granular ledgers (ContributionLedger, PayoutLedger, ReversalLedger), and all payments are processed in real time via Nomba's webhook infrastructure — no manual reconciliation required.",
+      "AjoCore modernises informal cooperative savings with a secure, transparent, and automated REST API. It supports ROSCA, ASCA, and personal saving cycles, automated Nomba virtual-account provisioning, HMAC-verified webhook contribution recording, idempotent payouts, and role-specific financial dashboards. The backend uses Clean Architecture across Domain, Application, Infrastructure, Persistence, and API layers, with CQRS via MediatR, FluentValidation, AutoMapper, Entity Framework Core with PostgreSQL, Hangfire, Serilog, Docker, Railway hosting, and a Vercel frontend.",
     stack: [
-      "React 19",
       ".NET 10",
-      "TypeScript",
+      "ASP.NET Core",
+      "C#",
       "PostgreSQL",
-      "Nomba API",
+      "Entity Framework Core",
       "MediatR",
       "CQRS",
+      "FluentValidation",
+      "AutoMapper",
       "Hangfire",
+      "Nomba API",
+      "Brevo",
+      "NSwag",
+      "OpenAPI",
+      "Serilog",
+      "Docker",
+      "Railway",
+      "React 19",
       "TanStack Query",
       "Tailwind CSS v4",
       "Framer Motion",
       "Zod",
-      "EF Core",
-      "FluentValidation",
-      "Docker",
     ],
     demoUrl: "https://ajo-core-frontend-eta.vercel.app",
     backendUrl: "https://github.com/Oriolowo-Mustapha/AjoCore---Backend",
     frontendUrl: "https://github.com/Adeyemiadigun/AjoCore--Frontend",
     modules: [
       {
-        title: "Real-Time Payment Processing",
+        title: "Multi-Scheme Saving Cycles",
         detail:
-          "Dynamic Nomba virtual accounts per user, inbound payment detection via signed webhooks, and automated contribution recording with duplicate protection.",
+          "Supports ROSCA rotation, ASCA accumulation, and personal savings goals, including maturity payouts, payout-order management, and early liquidation with a 5% penalty.",
       },
       {
-        title: "Rotational Payout Engine",
+        title: "Cooperative Group Management",
         detail:
-          "Automated scheduling and execution of rotational payouts with reorderable payout slots and early liquidation support (with 5% penalty).",
+          "Provides group creation, invite links, direct and batch member additions, join requests, approvals, deactivation, removals, and date-filtered ledger views.",
       },
       {
-        title: "Automated Background Jobs",
+        title: "Virtual Account Provisioning",
         detail:
-          "Hangfire-powered recurring tasks for liquidation sweeps, reversal processing, and email reminders for upcoming/overdue contributions.",
+          "Automatically provisions a dedicated Nomba virtual account for each member-cycle combination, so contributions are recorded by transferring money rather than entering records manually.",
       },
       {
-        title: "Multi-Role Dashboards",
+        title: "Webhook Contribution Recording",
         detail:
-          "Role-specific dashboards (Trader, Cooperative Admin, System Admin) with real-time balance cards, cycle progress tracking, and contribution charts via Recharts.",
+          "Validates Nomba payloads with HMAC signatures and timestamps, enforces idempotency, records matching contributions in real time, and automatically reverses mismatched amounts.",
+      },
+      {
+        title: "Automated Payout Disbursement",
+        detail:
+          "Runs a daily Hangfire liquidation sweep for ROSCA, ASCA, and personal-cycle payouts. Transfers are idempotent, bank details are validated, and members receive payout notifications.",
+      },
+      {
+        title: "Contribution Reminders",
+        detail:
+          "Runs a daily Hangfire reminder service that emails members whose contributions are due within the next one to two days.",
+      },
+      {
+        title: "Authentication and Authorisation",
+        detail:
+          "Provides registration, email verification, JWT access and refresh-token rotation, password recovery, BVN-backed KYC, and Trader, CooperativeAdmin, and SystemAdmin access controls.",
+      },
+      {
+        title: "Financial Dashboards",
+        detail:
+          "Shows trader balances, cooperative and cycle aggregates, contribution and payout ledgers, system-wide statistics, live Nomba wallet balances, and controlled withdrawals.",
+      },
+      {
+        title: "Profiles and Bank Services",
+        detail:
+          "Supports role-based profile management, payout-bank updates, Nigerian bank listings, and account-name verification before payout details are saved.",
+      },
+      {
+        title: "Reversal Engine",
+        detail:
+          "Creates reversal-ledger entries for mismatched contributions, validates destination bank details, executes refunds, and sends an itemised HTML explanation.",
       },
     ],
   },
@@ -178,44 +249,81 @@ export const projects = [
     title: "Skill-Matrix 2.0",
     category: "EdTech · AI",
     image: null,
-    backendOnly: true,
     description:
-      "A robust C#/.NET backend Web API (currently in development, frontend pending) for an AI-powered skill assessment platform. It enables dynamic proficiency evaluation and personalised growth planning.",
+      "Production-grade, multi-tenant skill-management platform with AI-generated assessments, sandboxed code execution in six languages, gamification, and personalised improvement plans.",
     longDescription:
-      "Currently focused on the backend infrastructure, Skill-Matrix-2.0 leverages Clean (Onion) Architecture and AI to generate contextual assessments. It analyses user performance to identify skill gaps and provides targeted learning recommendations. The system is designed for multi-role team management, with the frontend planned for a future phase.",
+      "Skill Matrix 2.0 assesses, tracks, and grows employee technical competencies through Groq-generated multiple-choice and coding assessments, Judge0 execution with hidden test cases, concept-level gap analysis, and AI-generated four-week improvement plans enriched with YouTube tutorials. It supports Learner, Manager, Admin, and SuperAdmin roles, organisation analytics, XP and streak gamification, Hangfire reminders, Brevo email, Cloudinary media, Google OAuth, and Scalar API documentation. The backend uses Clean Architecture, CQRS with MediatR, repository and unit-of-work persistence, FluentValidation, and Entity Framework Core with PostgreSQL.",
     stack: [
       "C#",
-      ".NET",
-      "ASP.NET Core",
+      "ASP.NET Core 8",
       "PostgreSQL",
-      "EF Core",
-      "Clean Architecture",
-      "MassTransit",
+      "Entity Framework Core 8",
+      "MediatR",
+      "CQRS",
+      "FluentValidation",
+      "Groq AI",
+      "Judge0",
+      "Hangfire",
+      "Brevo",
+      "Cloudinary",
+      "YouTube Data API",
       "JWT",
-      "BCrypt.Net",
-      "AI Integration",
+      "Google OAuth 2.0",
+      "BCrypt",
+      "Scalar",
+      "OpenAPI",
     ],
     backendUrl: "https://github.com/Oriolowo-Mustapha/Skill-Matrix-2.0",
     modules: [
       {
-        title: "AI Assessment Engine (Backend)",
+        title: "AI Skill Assessments",
         detail:
-          "Core logic for dynamically generating test questions based on selected skills and proficiency levels.",
+          "Generates tailored multiple-choice and coding assessments with concept tags, realistic time limits, autosaved responses, targeted re-assessments, and proficiency-level progression checks.",
       },
       {
-        title: "Performance Analytics",
+        title: "Judge0 Code Execution",
         detail:
-          "Backend processing of assessment results to identify weaknesses and track score trends over time.",
+          "Wraps user solutions in language-specific harnesses for six languages, submits Base64 code to Judge0, polls for completion, maps compiler errors to user lines, and scores visible and hidden tests.",
       },
       {
-        title: "Personalised Growth Logic",
+        title: "Gamification Engine",
         detail:
-          "Algorithmic generation of focus areas and targeted learning resource recommendations based on user gaps.",
+          "Awards XP, resolves levels, tracks daily streaks with freeze and repair mechanics, and supports organisation leaderboards, badges, peer endorsements, and activity logging.",
       },
       {
-        title: "Multi-Role Auth & Management",
+        title: "Career Paths and Tracks",
         detail:
-          "Secure backend implementation for Learner, Manager, and Admin roles with team oversight capabilities.",
+          "Manages career paths, specialised tracks, required skills, target proficiency levels, AI-generated catalogues, assignments, and cover images.",
+      },
+      {
+        title: "AI Improvement Plans",
+        detail:
+          "Groups assessment misses by concept, generates structured four-week plans, fetches tutorial videos, links official documentation, and tracks task completion.",
+      },
+      {
+        title: "Multi-Tenant Organisations",
+        detail:
+          "Supports organisation registration, team invitations, member profiles, skill coverage analytics, completion rates, and proficiency distribution across Learner, Manager, Admin, and SuperAdmin roles.",
+      },
+      {
+        title: "Authentication and Security",
+        detail:
+          "Provides JWT authentication, Google OAuth, email verification, password reset, role-based authorisation, Bcrypt hashing, webhook-secret validation, and centralised error handling.",
+      },
+      {
+        title: "Automated Email",
+        detail:
+          "Sends verification, password-reset, and weekly pending-assessment reminder emails through Brevo using a Hangfire recurring job.",
+      },
+      {
+        title: "External Integrations",
+        detail:
+          "Accepts authenticated LMS webhooks, enriches plans through the YouTube Data API, and manages media uploads through Cloudinary.",
+      },
+      {
+        title: "Dashboards and Analytics",
+        detail:
+          "Shows personal skills, streaks, XP, pending assessments, and organisation-wide coverage, completion, and proficiency metrics.",
       },
     ],
   },
@@ -358,6 +466,96 @@ export const projects = [
       },
     ],
   },
+  {
+    slug: "instasafe",
+    title: "InstaSafe",
+    category: "Fintech · Escrow",
+    image: "/Instasafe.png",
+    description:
+      "Production escrow backend for Nigerian social commerce. It secures buyer payments, automates vendor and rider payouts, and powers an AI-driven WhatsApp ordering chatbot on Azure infrastructure.",
+    longDescription:
+      "InstaSafe is a production-grade escrow API for vendors selling over WhatsApp and Instagram. It holds buyer funds after successful Paystack payments, releases them after OTP- or rider-verified delivery, and manages disputes, refunds, and automated payouts end to end. I designed and built the backend from scratch with .NET 10 and ASP.NET Core using Clean Architecture, CQRS with MediatR, FluentValidation, AutoMapper, Entity Framework Core with PostgreSQL, and 222 passing unit, domain, and integration tests. The system integrates Paystack, OpenWA WhatsApp, Groq AI, and Brevo, and is deployed to Azure App Service with a self-hosted OpenWA gateway on an Azure virtual machine.",
+    stack: [
+      ".NET 10",
+      "ASP.NET Core",
+      "C#",
+      "PostgreSQL",
+      "Entity Framework Core",
+      "MediatR",
+      "CQRS",
+      "FluentValidation",
+      "AutoMapper",
+      "JWT",
+      "Paystack",
+      "OpenWA",
+      "Groq AI",
+      "Brevo",
+      "Serilog",
+      "Azure Application Insights",
+      "Swagger",
+      "OpenAPI",
+      "xUnit",
+      "Docker",
+      "Azure App Service",
+      "Azure Virtual Machine",
+      "Vercel",
+    ],
+    demoUrl:
+      "https://instasafe-atfzfsb6c7csbvek.westus3-01.azurewebsites.net",
+    frontendUrl: "https://instasafe-six.vercel.app",
+    modules: [
+      {
+        title: "Escrow Payment Lifecycle",
+        detail:
+          "Manages Draft, AwaitingPayment, Held, Delivered, and Released states, with Refunded, Disputed, and Cancelled exits. Amounts are handled in kobo to avoid floating-point errors.",
+      },
+      {
+        title: "Dual Delivery Confirmation",
+        detail:
+          "Supports rider OTP confirmation with instant delivery-fee payout and a 24-hour vendor inspection window, plus buyer-code self-delivery with a 24-hour automatic-release backstop.",
+      },
+      {
+        title: "WhatsApp Ordering Chatbot",
+        detail:
+          "Guides vendors through conversational order creation with intent classification, mid-flow corrections, resumable drafts, live bank-holder verification, and deterministic validation before any state changes.",
+      },
+      {
+        title: "Paystack Financial Integration",
+        detail:
+          "Handles hosted checkout, webhook verification, vendor and rider transfers, refunds, real-time bank resolution, dedicated virtual accounts, and Nigeria’s bank list.",
+      },
+      {
+        title: "Multi-Role Authentication",
+        detail:
+          "Provides JWT authentication for vendors, dispatch riders, and admins with role-scoped endpoints, audience-specific DTOs, reflection-tested PII controls, and server-side ownership enforcement.",
+      },
+      {
+        title: "Background Workers",
+        detail:
+          "Uses a 15-second outbox publisher for WhatsApp and email notifications and a five-minute release worker for orders whose inspection or backstop windows have elapsed.",
+      },
+      {
+        title: "Public Order Tracking",
+        detail:
+          "Offers anonymous credential-free tracking by order number or Paystack reference, showing status transitions while exposing only PII-stripped order data.",
+      },
+      {
+        title: "Email Notifications",
+        detail:
+          "Sends payment receipts, order-status updates, and verification codes through Brevo SMTP.",
+      },
+      {
+        title: "Admin Operations",
+        detail:
+          "Exposes statistics, vendor and order search, dispute management, manual refunds, force-release, payout retries, chat audits, webhook replay, and outbox-error inspection.",
+      },
+      {
+        title: "Observability",
+        detail:
+          "Uses JSON-structured Serilog logging, file sinks on App Service, health checks, and optional Azure Application Insights telemetry and tracing.",
+      },
+    ],
+  },
 ] as const satisfies readonly Project[];
 
 export type ProjectSlug = (typeof projects)[number]["slug"];
@@ -366,5 +564,9 @@ export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
 }
 
-/** First three, matching the previous featured slot. */
-export const featured = projects.slice(0, 3);
+/** Homepage selection, independent of the full index order. */
+export const featuredSlugs = [
+  "instasafe",
+  "agroguardian-ai",
+  "ajocore",
+] as const satisfies readonly ProjectSlug[];

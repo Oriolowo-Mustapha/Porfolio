@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { Inter, Instrument_Serif } from "next/font/google";
 
 import { Footer } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -21,11 +22,20 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+/**
+ * Self-hosted rather than `next/font/google`, which was retrying
+ * `fonts.googleapis.com` on every dev request and falling back to a system
+ * mono whenever the network was slow. The file is the variable build from
+ * `@fontsource-variable/jetbrains-mono`, so one 40KB woff2 covers the whole
+ * weight axis and 400/500 need no separate files. Nothing is fetched at build or
+ * request time, so dev is quiet and a cold or offline build still works.
+ */
+const jetbrainsMono = localFont({
+  src: "../../node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2",
   variable: "--font-jetbrains",
-  subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: "100 800",
   display: "swap",
+  fallback: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
 });
 
 export const metadata: Metadata = {
@@ -80,8 +90,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${inter.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} h-full`}
     >
       {/* Bottom padding clears the pill, which is only rendered below `md`.
-          From `md` up the expanded pill lives in the header, so the floating
-          one is gone and owes no space. */}
+          From `md` up the header pill takes over, so the floating one is gone
+          and owes no space. */}
       <body className="min-h-full flex flex-col bg-background text-foreground antialiased pb-28 md:pb-0">
         <a
           href="#main"
@@ -90,10 +100,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <SiteHeader />
-        {/* Mobile navigation. `hidden` from `md` up, where the header renders
-            the expanded pill instead — one aria-label="Primary" per viewport. */}
+        {/* Mobile navigation, icons only. `hidden` from `md` up, where the
+            header renders the labelled pill instead — one aria-label="Primary"
+            per viewport. */}
         <div className="md:hidden">
-          <BottomNavBar stickyBottom />
+          <BottomNavBar variant="icons" stickyBottom />
         </div>
         <main id="main" className="flex-1">
           {children}
