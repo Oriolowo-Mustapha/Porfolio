@@ -1,0 +1,312 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+  --font-serif: var(--font-instrument);
+  --font-display: var(--font-instrument);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* ── Paper tokens ──────────────────────────────────────────────
+     print, not app. near-zero radius, hairline rules, no shadows. */
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-signal: var(--signal);
+  --color-signal-soft: var(--signal-soft);
+  --color-dock: var(--dock);
+  --color-dock-border: var(--dock-border);
+  --color-dock-active: var(--dock-active);
+
+  /* 2px: paper does not have rounded corners. */
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 3px;
+  --radius-xl: 4px;
+  --radius-2xl: 4px;
+  --radius-3xl: 6px;
+  --radius-4xl: 8px;
+
+  /* Motion — Emil Kowalski: strong custom curves, never ease-in. */
+  --ease-out-expo: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-expo: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+:root {
+  /* Warm off-white. Never #fff — pure white reads as a screen, not a sheet. */
+  --paper: oklch(0.968 0.005 85);
+  --paper-raised: oklch(0.985 0.004 85);
+
+  /* Ink, warmed off pure black. */
+  --ink: oklch(0.205 0.008 70);
+  --ink-muted: oklch(0.485 0.008 70);
+  /* Labels and secondary copy. 0.54 is the lightness that clears WCAG AA
+     (4.62:1 on paper, 4.85:1 on raised). The obvious 0.62 sits at 3.32:1 and
+     fails — measured, not guessed. */
+  --ink-faint: oklch(0.54 0.008 70);
+
+  /* Hairlines. `--rule` is decorative structure and is exempt from WCAG
+     1.4.11; `--rule-strong` marks boundaries whose absence would lose
+     meaning (focus rings, the active nav item), so it must clear 3:1.
+     0.62 measures 3.32:1 on paper and 3.49:1 on raised. */
+  --rule: oklch(0.885 0.008 80);
+  --rule-strong: oklch(0.62 0.01 75);
+
+  /* The one saturated color. Burnt ochre, used only for signal. */
+  --signal: oklch(0.47 0.13 45);
+  --signal-soft: oklch(0.93 0.03 55);
+
+  /* Navigation dock — the one object on the page allowed to float.
+     It is a physical card resting on the sheet, so it needs a real shadow
+     and full rounding where the rest of the design uses hairlines and 2px
+     radii. Both the hairline and the shadow are tinted with the ochre
+     `--signal` family rather than neutral grey, so the pill reads as part of
+     this palette instead of a borrowed grey control sitting on warm paper.
+     The shadow stays ink-warm and low: enough to lift the card, not enough to
+     read as a dark halo boxing it in. */
+  --dock: oklch(0.998 0.002 85);
+  --dock-border: oklch(0.885 0.028 50);
+  --dock-active: oklch(0.855 0.055 50);
+  --dock-shadow:
+    0 1px 2px oklch(0.47 0.13 45 / 0.05),
+    0 6px 16px oklch(0.47 0.13 45 / 0.07),
+    0 14px 32px oklch(0.47 0.13 45 / 0.05);
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--paper-raised);
+  --card-foreground: var(--ink);
+  --popover: var(--paper-raised);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: oklch(0.945 0.006 85);
+  --secondary-foreground: var(--ink);
+  --muted: oklch(0.945 0.006 85);
+  --muted-foreground: var(--ink-muted);
+  --accent: var(--signal-soft);
+  --accent-foreground: var(--signal);
+  --destructive: oklch(0.5 0.17 27);
+  --border: var(--rule);
+  /* Input borders are load-bearing UI: without them the field boundary is
+     lost, so they take the 3:1 token rather than the decorative hairline. */
+  --input: var(--rule-strong);
+  --ring: var(--ink);
+  --chart-1: oklch(0.47 0.13 45);
+  --chart-2: oklch(0.62 0.09 80);
+  --chart-3: oklch(0.5 0.05 140);
+  --chart-4: oklch(0.55 0.06 240);
+  --chart-5: oklch(0.42 0.05 70);
+  --sidebar: var(--paper-raised);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--ink);
+  --sidebar-primary-foreground: var(--paper);
+  --sidebar-accent: var(--signal-soft);
+  --sidebar-accent-foreground: var(--signal);
+  --sidebar-border: var(--rule);
+  --sidebar-ring: var(--ink);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+    /* No `scroll-behavior: smooth`. Native smooth scrolling was verified
+       failing silently in a Chromium run — `scrollTo` reported no movement
+       at all while the same call with `behavior: "instant"` worked. Nothing
+       animates scroll position now that navigation is route-based; the
+       remaining fragment link is the skip link, which should be instant
+       either way. */
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Paper grain. A fixed, non-scrolling overlay so the texture belongs to
+     the viewport, not the content — like looking through glass at a sheet. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.028;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background: var(--signal-soft);
+    color: var(--ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  /* Scrollbar: a thin ink rule on paper. */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--paper);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--rule-strong);
+    border: 3px solid var(--paper);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--ink-faint);
+  }
+  html {
+    scrollbar-color: var(--rule-strong) var(--paper);
+  }
+}
+
+@layer components {
+  /* Display type. Instrument Serif is high-contrast and editorial;
+     it needs a tighter tracking than the body face to sit correctly. */
+  .font-display {
+    font-family: var(--font-instrument), Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 0.98;
+  }
+
+  /* Small caps label — the folio / eyebrow voice of the design.
+     Letter-spaced uppercase at 11px is a print convention, not a UI one. */
+  .label {
+    font-family: var(--font-jetbrains), monospace;
+    font-size: 0.6875rem;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* Press feedback. Present on every pressable element, per Emil. */
+  .pressable {
+    transition: transform 160ms var(--ease-out-expo);
+  }
+  .pressable:active {
+    transform: scale(0.97);
+  }
+
+  /* Entrance. CSS-only, off the main thread, no hydration flash.
+     Starts at 0.95 scale + partial opacity — never from nothing. */
+  .reveal {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 0 0);
+    transition:
+      opacity 480ms var(--ease-out-expo),
+      transform 480ms var(--ease-out-expo),
+      clip-path 620ms var(--ease-in-out-expo);
+  }
+  @starting-style {
+    .reveal {
+      opacity: 0;
+      transform: translateY(10px) scale(0.97);
+      clip-path: inset(0 0 100% 0);
+    }
+  }
+  /* Nav pill entrance. Same @starting-style treatment as .reveal, and for the
+     same reason it must stay CSS-only: driving the pill's entrance from
+     JavaScript meant painting `opacity: 0` into the SSR HTML, which then
+     failed to match for anyone whose OS has reduced motion enabled (the hook
+     reports false on the server, true on the client). The pill is the one
+     element present on every route, so that mismatch was on every page. */
+  .pill-enter {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 420ms var(--ease-out-expo),
+      transform 420ms var(--ease-out-expo);
+  }
+  @starting-style {
+    .pill-enter {
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      transition: opacity 200ms linear;
+      transform: none;
+      clip-path: none;
+    }
+    .pill-enter {
+      transition: opacity 200ms linear;
+      transform: none;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Hover must be gated: touch fires :hover on tap and leaves it stuck. */
+  @media (hover: hover) and (pointer: fine) {
+    .link-underline {
+      background-image: linear-gradient(var(--signal), var(--signal));
+      background-size: 0% 1px;
+      background-position: 0 100%;
+      background-repeat: no-repeat;
+      transition: background-size 240ms var(--ease-out-expo);
+    }
+    .link-underline:hover {
+      background-size: 100% 1px;
+    }
+  }
+}
