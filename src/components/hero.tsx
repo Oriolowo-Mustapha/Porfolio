@@ -20,13 +20,13 @@ export function Hero() {
     <section aria-labelledby="hero-heading" className="border-b border-rule">
       <div className="mx-auto grid max-w-[1200px] grid-cols-[minmax(0,1fr)_auto] items-start gap-x-5 gap-y-8 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-x-16 lg:gap-y-0">
         <div className="col-span-2 flex flex-col items-start lg:col-span-1 lg:col-start-1 lg:row-start-1">
-          <Label className="reveal">
+          <Label className="reveal reveal-delay-1">
             {site.role} — {site.location}
           </Label>
 
           <h1
             id="hero-heading"
-            className="font-display reveal mt-4 text-[clamp(3rem,10vw,5.75rem)]"
+            className="font-display reveal reveal-delay-1 mt-4 text-[clamp(3rem,10vw,5.75rem)]"
           >
             Oriolowo
             <br />
@@ -36,7 +36,7 @@ export function Hero() {
           <RolesRotator />
         </div>
 
-        <p className="reveal col-start-1 max-w-lg text-lg leading-relaxed text-ink-muted sm:text-xl lg:row-start-2">
+        <p className="reveal reveal-delay-2 col-start-1 max-w-lg text-lg leading-relaxed text-ink-muted sm:text-xl lg:row-start-2">
           Software engineer building{" "}
             <span className="text-ink">secure, scalable products</span> across
             the stack, from fintech and AI-powered platforms to polished
@@ -45,7 +45,7 @@ export function Hero() {
             <span className="text-ink">React</span>.
           </p>
 
-          <div className="reveal col-span-2 mt-9 flex flex-wrap items-center gap-x-5 gap-y-3 lg:col-span-1 lg:col-start-1 lg:row-start-3">
+          <div className="reveal reveal-delay-3 col-span-2 mt-9 flex flex-wrap items-center gap-x-5 gap-y-3 lg:col-span-1 lg:col-start-1 lg:row-start-3">
             <Link
               href="/projects"
               className="pressable group inline-flex items-center gap-2 rounded-sm bg-ink px-5 py-3 text-sm text-paper transition-colors duration-150 hover:bg-signal"
@@ -74,7 +74,7 @@ export function Hero() {
             </a>
           </div>
 
-          <dl className="reveal col-span-2 mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-rule pt-6 lg:col-span-1 lg:col-start-1 lg:row-start-4">
+          <dl className="reveal reveal-delay-4 col-span-2 mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-rule pt-6 lg:col-span-1 lg:col-start-1 lg:row-start-4">
             <Stat value={`${site.yearsExperience}+`} label="Years" />
             <Stat
               value={String(projects.length).padStart(2, "0")}
@@ -98,7 +98,7 @@ export function Hero() {
             the top so the circular frame keeps the face rather than centering
             on the background. */}
         <div className="col-start-2 row-start-2 mt-1 flex w-full justify-end lg:col-start-2 lg:row-span-4 lg:row-start-1 lg:mt-0 lg:self-center">
-          <div className="reveal relative aspect-square w-28 shrink-0 overflow-hidden rounded-full border border-rule bg-paper-raised sm:w-36 lg:w-80">
+          <div className="reveal reveal-delay-2 relative aspect-square w-28 shrink-0 overflow-hidden rounded-full border border-rule bg-paper-raised sm:w-36 lg:w-80">
             <Image
               src="/headshot.jpeg"
               alt="Portrait of Oriolowo Mustapha."

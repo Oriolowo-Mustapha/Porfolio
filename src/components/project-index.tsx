@@ -7,11 +7,19 @@ import { getProject, projects, type Project, type ProjectSlug } from "@/lib/proj
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
+/** Keep route-mount staggers inside the 160ms budget, however long the list. */
+const rowDelays = [
+  "reveal-delay-1",
+  "reveal-delay-2",
+  "reveal-delay-3",
+  "reveal-delay-4",
+] as const;
+
 export function ProjectIndex({ slugs }: { slugs?: readonly ProjectSlug[] }) {
   return (
     <section id="work" aria-labelledby="work-heading" className="border-b border-rule">
       <div className="mx-auto max-w-[1200px] px-5 py-16 sm:px-8 sm:py-20">
-        <div className="flex items-baseline gap-4">
+        <div className="reveal flex items-baseline gap-4">
           <Label className="text-signal tabular-nums">05</Label>
           <h2 id="work-heading" className="font-display text-3xl sm:text-4xl">
             Selected work
@@ -19,7 +27,7 @@ export function ProjectIndex({ slugs }: { slugs?: readonly ProjectSlug[] }) {
           <div aria-hidden className="mb-1.5 h-px flex-1 bg-rule" />
         </div>
 
-        <p className="mt-6 max-w-xl text-ink-muted">
+        <p className="reveal reveal-delay-1 mt-6 max-w-xl text-ink-muted">
           Flagship builds spanning AI verification, security infrastructure,
           cooperative fintech, and organisational tooling.
         </p>
@@ -55,7 +63,7 @@ export function ProjectList({
 }) {
   return (
     <>
-      <h2 className="label">{heading}</h2>
+      <h2 className="label reveal">{heading}</h2>
       <ProjectRows limit={limit} className="mt-8 border-t border-rule" />
       {limit ? <AllProjectsLink className="mt-10" /> : null}
     </>
@@ -86,7 +94,11 @@ function ProjectRows({
     <ol className={className}>
       {list.map((p, i) => (
         <li key={p.slug}>
-          <ProjectRow project={p} index={i + 1} />
+          <ProjectRow
+            project={p}
+            index={i + 1}
+            delay={rowDelays[Math.min(i, rowDelays.length - 1)]}
+          />
         </li>
       ))}
     </ol>
@@ -111,14 +123,16 @@ function AllProjectsLink({ className }: { className?: string }) {
 function ProjectRow({
   project,
   index,
+  delay,
 }: {
   project: Project;
   index: number;
+  delay: (typeof rowDelays)[number];
 }) {
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="group relative flex items-start gap-4 border-b border-rule py-7 transition-colors duration-150 sm:gap-6 hover:bg-paper-raised sm:px-4 sm:-mx-4"
+      className={`lift reveal group relative flex items-start gap-4 border-b border-rule py-7 transition-colors duration-150 sm:gap-6 hover:bg-paper-raised sm:px-4 sm:-mx-4 ${delay}`}
     >
       <span className="label mt-2 w-7 shrink-0 tabular-nums text-signal">
         {pad(index)}

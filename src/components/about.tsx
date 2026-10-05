@@ -52,7 +52,7 @@ export function About() {
       </h2>
 
       <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
-        <div>
+        <div className="reveal">
           <Label className="text-signal">Origin</Label>
           <p className="font-display mt-4 text-3xl leading-tight sm:text-4xl">
             {site.degree},{" "}
@@ -69,7 +69,7 @@ export function About() {
           </p>
         </div>
 
-        <div className="max-w-[68ch] space-y-6 text-lg leading-relaxed text-ink-muted">
+        <div className="reveal reveal-delay-1 max-w-[68ch] space-y-6 text-lg leading-relaxed text-ink-muted">
           {bio.map((p) => (
             <p key={p.text.slice(0, 24)}>
               <Prose text={p.text} emphasis={p.emphasis} signal={p.signal} />

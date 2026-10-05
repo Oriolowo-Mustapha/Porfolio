@@ -20,19 +20,19 @@ export function PageHero({
   return (
     <header className="border-b border-rule">
       <div className="mx-auto max-w-[1200px] px-5 pt-14 pb-12 sm:px-8 sm:pt-20 sm:pb-16">
-        <div className="flex items-baseline gap-4">
+        <div className="reveal flex items-baseline gap-4">
           <Label className="text-signal tabular-nums">{numeral}</Label>
           <Label>{eyebrow}</Label>
         </div>
 
-        <h1 className="font-display mt-5 text-[clamp(2.75rem,8vw,5rem)]">
+        <h1 className="font-display reveal reveal-delay-1 mt-5 text-[clamp(2.75rem,8vw,5rem)]">
           {title}
           <span className="text-signal">.</span>
         </h1>
 
-        <Rule className="mt-8 max-w-md" />
+        <Rule className="reveal reveal-delay-2 mt-8 max-w-md" />
 
-        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ink-muted sm:text-xl">
+        <p className="reveal reveal-delay-3 mt-8 max-w-2xl text-lg leading-relaxed text-ink-muted sm:text-xl">
           {lede}
         </p>
       </div>

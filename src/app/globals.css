@@ -241,22 +241,77 @@
   }
 
   /* Entrance. CSS-only, off the main thread, no hydration flash.
-     Starts at 0.95 scale + partial opacity — never from nothing. */
+     Starts at 0.95 scale + partial opacity — never from nothing. UI motion
+     stays at or under 300ms; delays are short staggers, not pauses. */
   .reveal {
     opacity: 1;
     transform: none;
     clip-path: inset(0 0 0 0);
     transition:
-      opacity 480ms var(--ease-out-expo),
-      transform 480ms var(--ease-out-expo),
-      clip-path 620ms var(--ease-in-out-expo);
+      opacity 300ms var(--ease-out-expo),
+      transform 300ms var(--ease-out-expo),
+      clip-path 300ms var(--ease-in-out-expo);
+  }
+  .reveal-delay-1 {
+    transition-delay: 40ms;
+  }
+  .reveal-delay-2 {
+    transition-delay: 80ms;
+  }
+  .reveal-delay-3 {
+    transition-delay: 120ms;
+  }
+  .reveal-delay-4 {
+    transition-delay: 160ms;
   }
   @starting-style {
     .reveal {
       opacity: 0;
-      transform: translateY(10px) scale(0.97);
+      transform: translateY(8px) scale(0.97);
       clip-path: inset(0 0 100% 0);
     }
+  }
+
+  /* Lift for linked cards and rows. Hover is pointer-gated; press feedback is
+     universal because `:active` is real on touch. */
+  .lift {
+    transition:
+      transform 220ms var(--ease-out-expo),
+      background-color 200ms var(--ease-out-expo),
+      border-color 200ms var(--ease-out-expo);
+  }
+  .lift:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  /* Icon buttons for social logos. One resting state, one hover state, one
+     press state — no color interpolation gymnastics. */
+  .icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    background-color: transparent;
+    color: var(--ink-muted);
+    transition:
+      transform 160ms var(--ease-out-expo),
+      color 160ms var(--ease-out-expo),
+      border-color 160ms var(--ease-out-expo),
+      background-color 160ms var(--ease-out-expo);
+  }
+  .icon-button svg {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+  .icon-button:active {
+    transform: translateY(0) scale(0.94);
+  }
+  .icon-button:focus-visible {
+    border-color: var(--ink);
+    color: var(--ink);
   }
   /* Nav pill entrance. Same @starting-style treatment as .reveal, and for the
      same reason it must stay CSS-only: driving the pill's entrance from
@@ -283,6 +338,20 @@
       transform: none;
       clip-path: none;
     }
+    .reveal-delay-1,
+    .reveal-delay-2,
+    .reveal-delay-3,
+    .reveal-delay-4 {
+      transition-delay: 0ms;
+    }
+    .lift,
+    .icon-button {
+      transition:
+        color 160ms linear,
+        border-color 160ms linear,
+        background-color 160ms linear;
+      transform: none;
+    }
     .pill-enter {
       transition: opacity 200ms linear;
       transform: none;
@@ -298,6 +367,15 @@
 
   /* Hover must be gated: touch fires :hover on tap and leaves it stuck. */
   @media (hover: hover) and (pointer: fine) {
+    .lift:hover {
+      transform: translateY(-2px);
+    }
+    .icon-button:hover {
+      transform: translateY(-1px);
+      border-color: var(--ink);
+      background-color: var(--paper-raised);
+      color: var(--ink);
+    }
     .link-underline {
       background-image: linear-gradient(var(--signal), var(--signal));
       background-size: 0% 1px;
