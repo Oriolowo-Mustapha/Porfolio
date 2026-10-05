@@ -1,6 +1,7 @@
 import { Mail } from "lucide-react";
 
 import { Rule } from "@/components/primitives";
+import { SocialLink, socialLinks } from "@/components/social-icons";
 import { site } from "@/lib/site";
 
 export function Footer() {
@@ -25,38 +26,24 @@ export function Footer() {
             </a>
           </div>
 
-          <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2">
-            <a
-              href={site.links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="label link-underline text-ink-muted hover:text-ink"
-            >
-              GitHub
-            </a>
-            <a
-              href={site.links.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="label link-underline text-ink-muted hover:text-ink"
-            >
-              LinkedIn
-            </a>
-            <a
-              href={site.links.twitter}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="label link-underline text-ink-muted hover:text-ink"
-            >
-              X
-            </a>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+            <nav aria-label="Social profiles" className="flex gap-2.5">
+              {socialLinks.map((social) => (
+                <SocialLink
+                  key={social.network}
+                  network={social.network}
+                  label={social.label}
+                  href={social.href}
+                />
+              ))}
+            </nav>
             <a
               href={`mailto:${site.email}`}
               className="label link-underline text-ink-muted hover:text-ink"
             >
               Email
             </a>
-          </nav>
+          </div>
         </div>
 
         <Rule className="my-8" />

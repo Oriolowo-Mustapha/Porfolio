@@ -104,8 +104,8 @@ export const experience = [
     kind: "Contract",
     location: "Remote",
     start: "Dec 2025",
-    end: "Present",
-    current: true,
+    end: "Feb 2026",
+    current: false,
     bullets: [
       "Designed and built the Resumeefy Jobs Backend, managing the full lifecycle from the initial C# implementation to the current Node.js architecture.",
       "Utilised Express and Prisma to optimise API performance and database management.",

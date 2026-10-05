@@ -21,7 +21,7 @@ export function Stack() {
   return (
     <section
       aria-labelledby="technical-skills-heading"
-      className="mt-16 border-t border-rule pt-10"
+      className="reveal reveal-delay-2 mt-16 border-t border-rule pt-10"
     >
       <h2 id="technical-skills-heading" className="label">
         Technical skills
@@ -118,7 +118,7 @@ function Timeline() {
 /** Experience timeline. Rendered by /roles, which owns the page chrome. */
 export function Experience() {
   return (
-    <section aria-labelledby="roles-heading">
+    <section aria-labelledby="roles-heading" className="reveal">
       <h2 id="roles-heading" className="label">
         Positions
       </h2>
@@ -136,7 +136,7 @@ export function RolesSection() {
   return (
     <section id="roles" aria-labelledby="roles-section-heading" className="border-b border-rule">
       <div className="mx-auto max-w-[1200px] px-5 py-16 sm:px-8 sm:py-20">
-        <div className="flex items-baseline gap-4">
+        <div className="reveal flex items-baseline gap-4">
           <Label className="text-signal tabular-nums">04</Label>
           <h2 id="roles-section-heading" className="font-display text-3xl sm:text-4xl">
             Roles
@@ -144,7 +144,7 @@ export function RolesSection() {
           <div aria-hidden className="mb-1.5 h-px flex-1 bg-rule" />
         </div>
 
-        <p className="mt-6 max-w-xl text-ink-muted">
+        <p className="reveal reveal-delay-1 mt-6 max-w-xl text-ink-muted">
           Three years building production backends — from REST APIs and
           authentication to AI pipelines that had to hold up under real traffic.
         </p>

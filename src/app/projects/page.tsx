@@ -24,7 +24,7 @@ export default function ProjectsPage() {
         <div className="mx-auto max-w-[1200px] px-5 pt-12 pb-16 sm:px-8">
           <Link
             href="/"
-            className="label group inline-flex items-center gap-1.5 text-ink-muted hover:text-ink"
+            className="label reveal group inline-flex items-center gap-1.5 text-ink-muted hover:text-ink"
           >
             <ArrowLeft
               className="size-3 transition-transform duration-200 ease-out-expo group-hover:-translate-x-0.5"
@@ -32,10 +32,10 @@ export default function ProjectsPage() {
             />
             Index
           </Link>
-          <h1 className="font-display mt-6 text-[clamp(2.5rem,7vw,4.5rem)]">
+          <h1 className="font-display reveal reveal-delay-1 mt-6 text-[clamp(2.5rem,7vw,4.5rem)]">
             Projects<span className="text-signal">.</span>
           </h1>
-          <p className="mt-5 max-w-xl text-ink-muted">
+          <p className="reveal reveal-delay-2 mt-5 max-w-xl text-ink-muted">
             {projects.length} builds, indexed. Each entry opens a full brief —
             the problem, the architecture, and the links.
           </p>

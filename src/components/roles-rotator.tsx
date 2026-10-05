@@ -69,7 +69,7 @@ export function RolesRotator() {
           <span
             key={role}
             className={cn(
-              "absolute inset-0 transition-all duration-300 ease-out-expo",
+              "absolute inset-0 transition-[opacity,transform] duration-300 ease-out-expo",
               i === index
                 ? "translate-y-0 opacity-100"
                 : "-translate-y-1/2 opacity-0",

@@ -70,7 +70,7 @@ export default async function ProjectPage({
       <div className="mx-auto max-w-[1200px] px-5 py-12 sm:px-8 sm:py-16">
         <Link
           href="/projects"
-          className="label group inline-flex items-center gap-1.5 text-ink-muted hover:text-ink"
+          className="label reveal group inline-flex items-center gap-1.5 text-ink-muted hover:text-ink"
         >
           <ArrowLeft
             className="size-3 transition-transform duration-200 ease-out-expo group-hover:-translate-x-0.5"
@@ -80,18 +80,18 @@ export default async function ProjectPage({
         </Link>
 
         <header className="mt-8">
-          <Label className="text-signal">{project.category}</Label>
-          <h1 className="font-display mt-4 text-[clamp(2.5rem,7vw,4.5rem)]">
+          <Label className="reveal reveal-delay-1 text-signal">{project.category}</Label>
+          <h1 className="font-display reveal reveal-delay-1 mt-4 text-[clamp(2.5rem,7vw,4.5rem)]">
             {project.title}
             <span className="text-signal">.</span>
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-muted">
+          <p className="reveal reveal-delay-2 mt-6 max-w-2xl text-lg leading-relaxed text-ink-muted">
             {project.description}
           </p>
         </header>
 
         {project.image ? (
-          <div className="relative mt-12 aspect-16/7 w-full overflow-hidden rounded-sm border border-rule bg-paper-raised">
+          <div className="reveal reveal-delay-2 relative mt-12 aspect-16/7 w-full overflow-hidden rounded-sm border border-rule bg-paper-raised">
             <Image
               src={project.image}
               alt={`${project.title} interface`}
@@ -104,7 +104,7 @@ export default async function ProjectPage({
         ) : null}
 
         {links.length ? (
-          <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3">
+          <div className="reveal reveal-delay-3 mt-10 flex flex-wrap gap-x-6 gap-y-3">
             {links.map((l) => (
               <a
                 key={l.label}
@@ -182,7 +182,7 @@ export default async function ProjectPage({
 
         <Link
           href={`/projects/${next.slug}`}
-          className="group mt-20 block border-t border-rule pt-8"
+          className="lift group mt-20 block border-t border-rule pt-8"
         >
           <span className="label">Next project</span>
           <span className="font-display mt-3 block text-3xl transition-colors duration-150 group-hover:text-signal sm:text-4xl">

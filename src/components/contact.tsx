@@ -4,6 +4,7 @@ import { useActionState } from "react";
 
 import { sendMessage, type ContactState } from "@/app/actions/contact";
 import { site } from "@/lib/site";
+import { SocialLink, socialLinks } from "@/components/social-icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label as FieldLabel } from "@/components/ui/label";
@@ -18,8 +19,6 @@ const channels = [
     href: `mailto:${site.email}`,
   },
   { label: "WhatsApp", value: "+234 703 160 2720", href: site.whatsapp },
-  { label: "GitHub", value: "@Oriolowo-Mustapha", href: site.links.github },
-  { label: "LinkedIn", value: "Oriolowo Mustapha", href: site.links.linkedin },
 ] as const;
 
 export function Contact() {
@@ -29,14 +28,14 @@ export function Contact() {
     <section aria-labelledby="contact-heading">
       <h2
         id="contact-heading"
-        className="font-display max-w-2xl text-[clamp(2rem,5.5vw,3.5rem)]"
+        className="font-display reveal max-w-2xl text-[clamp(2rem,5.5vw,3.5rem)]"
       >
         Let&rsquo;s build something{" "}
         <span className="italic text-signal">exceptional</span> together.
       </h2>
 
       <div className="mt-14 grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-        <div>
+        <div className="reveal reveal-delay-1">
           <h3 className="label">Direct</h3>
           <dl className="mt-5 space-y-4">
             {channels.map((c) => (
@@ -58,12 +57,31 @@ export function Contact() {
             ))}
           </dl>
 
+          <div className="mt-10">
+            <h3 className="label">Social</h3>
+            <div className="mt-4 flex gap-2.5">
+              {socialLinks.map((social, index) => (
+                <SocialLink
+                  key={social.network}
+                  network={social.network}
+                  label={social.label}
+                  href={social.href}
+                  className={`reveal reveal-delay-${Math.min(index + 1, 4) as 1 | 2 | 3 | 4}`}
+                />
+              ))}
+            </div>
+          </div>
+
           <p className="label mt-10">
             {site.location} · Remote · {site.availability}
           </p>
         </div>
 
-        <form action={action} className="space-y-5" noValidate>
+        <form
+          action={action}
+          className="reveal reveal-delay-2 space-y-5"
+          noValidate
+        >
           <p className="sr-only" aria-hidden>
             <label htmlFor="gotcha">Leave this field empty</label>
             <input
